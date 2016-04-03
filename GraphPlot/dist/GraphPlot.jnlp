@@ -8,13 +8,11 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="GraphPlot.jar" size="16787399" download="eager" />
+    <jar href="GraphPlot.jar" size="30811" download="eager" />
     <jar href="lib\3DViewer.jar" size="1288494" download="eager" />
-    <jar href="lib\FXyzLib.jar" size="14733061" download="eager" />
-    <jar href="lib\JCSG.jar" size="866270" download="eager" />
+    <jar href="lib\FXyzLib.jar" size="14732482" download="eager" />
     <jar href="lib\exp4j-0.3.11.jar" size="44079" download="eager" />
     <jar href="lib\fontawesomefx-8.9.jar" size="571068" download="eager" />
-    <jar href="lib\poly2tri-core-0.1.0-SNAPSHOT.jar" size="61924" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="GraphPlot" >
     <param name="requiredFXVersion" value="8.0+"/>
