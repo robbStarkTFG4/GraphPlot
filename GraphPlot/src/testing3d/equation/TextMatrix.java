@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package testing3d.util;
+package testing3d.equation;
 
 import static javafx.application.Application.launch;
 import javafx.geometry.Insets;
@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import testing3d.util.PropertyWrapper;
 
 /**
  *
@@ -156,7 +157,7 @@ public class TextMatrix {
             txt.setStyle("-fx-font-size:15");
             txt.setTranslateY(9);
             txt.setPrefHeight(5);
-            txt.setPrefWidth(40);
+            txt.setPrefWidth(47);
             nodeArray[i][j] = txt;
             matrix.add(nodeArray[i][j], j, i);
         }
@@ -165,7 +166,7 @@ public class TextMatrix {
             txt.setStyle("-fx-font-size:15");
             txt.setTranslateY(9);
             txt.setPrefHeight(5);
-            txt.setPrefWidth(40);
+            txt.setPrefWidth(47);
             nodeArray[i][j] = txt;
             matrix.add(nodeArray[i][j], j, i);
         }
@@ -252,7 +253,7 @@ public class TextMatrix {
             txt.setStyle("-fx-font-size:15");
             txt.setTranslateY(9);
             txt.setPrefHeight(5);
-            txt.setPrefWidth(40);
+            txt.setPrefWidth(47);
             txt.setUserData("c");
             nodeArray[i][j] = txt;
             matrix.add(nodeArray[i][j], j, i);
@@ -262,7 +263,7 @@ public class TextMatrix {
             txt.setStyle("-fx-font-size:15");
             txt.setTranslateY(9);
             txt.setPrefHeight(5);
-            txt.setPrefWidth(40);
+            txt.setPrefWidth(47);
             txt.setUserData("a");
             nodeArray[i][j] = txt;
             matrix.add(nodeArray[i][j], j, i);
@@ -272,7 +273,7 @@ public class TextMatrix {
             txt.setStyle("-fx-font-size:15");
             txt.setTranslateY(9);
             txt.setPrefHeight(5);
-            txt.setPrefWidth(40);
+            txt.setPrefWidth(47);
             txt.setUserData("b");
             nodeArray[i][j] = txt;
             matrix.add(nodeArray[i][j], j, i);
@@ -350,7 +351,7 @@ public class TextMatrix {
             txt.setStyle("-fx-font-size:15");
             txt.setTranslateY(9);
             txt.setPrefHeight(5);
-            txt.setPrefWidth(40);
+            txt.setPrefWidth(47);
             txt.setUserData("a");
             nodeArray[i][j] = txt;
             matrix.add(nodeArray[i][j], j, i);
@@ -360,7 +361,7 @@ public class TextMatrix {
             txt.setStyle("-fx-font-size:15");
             txt.setTranslateY(9);
             txt.setPrefHeight(5);
-            txt.setPrefWidth(40);
+            txt.setPrefWidth(47);
             txt.setUserData("b");
             nodeArray[i][j] = txt;
             matrix.add(nodeArray[i][j], j, i);
@@ -370,7 +371,7 @@ public class TextMatrix {
             txt.setStyle("-fx-font-size:15");
             txt.setTranslateY(9);
             txt.setPrefHeight(5);
-            txt.setPrefWidth(40);
+            txt.setPrefWidth(47);
             txt.setUserData("c");
             nodeArray[i][j] = txt;
             matrix.add(nodeArray[i][j], j, i);
@@ -450,7 +451,7 @@ public class TextMatrix {
             txt.setStyle("-fx-font-size:15");
             txt.setTranslateY(9);
             txt.setPrefHeight(5);
-            txt.setPrefWidth(40);
+            txt.setPrefWidth(47);
             txt.setUserData("a");
             nodeArray[i][j] = txt;
             matrix.add(nodeArray[i][j], j, i);
@@ -460,7 +461,7 @@ public class TextMatrix {
             txt.setStyle("-fx-font-size:15");
             txt.setTranslateY(9);
             txt.setPrefHeight(5);
-            txt.setPrefWidth(40);
+            txt.setPrefWidth(47);
             txt.setUserData("b");
             nodeArray[i][j] = txt;
             matrix.add(nodeArray[i][j], j, i);
@@ -470,7 +471,7 @@ public class TextMatrix {
             txt.setStyle("-fx-font-size:15");
             txt.setTranslateY(9);
             txt.setPrefHeight(5);
-            txt.setPrefWidth(40);
+            txt.setPrefWidth(47);
             txt.setUserData("c");
             nodeArray[i][j] = txt;
             matrix.add(nodeArray[i][j], j, i);
@@ -540,7 +541,7 @@ public class TextMatrix {
             txt.setStyle("-fx-font-size:15");
             txt.setTranslateY(9);
             txt.setPrefHeight(5);
-            txt.setPrefWidth(40);
+            txt.setPrefWidth(47);
             nodeArray[i][j] = txt;
             matrix.add(nodeArray[i][j], j, i);
         }
@@ -549,7 +550,7 @@ public class TextMatrix {
             txt.setStyle("-fx-font-size:15");
             txt.setTranslateY(9);
             txt.setPrefHeight(5);
-            txt.setPrefWidth(40);
+            txt.setPrefWidth(47);
             nodeArray[i][j] = txt;
             matrix.add(nodeArray[i][j], j, i);
         }
@@ -625,7 +626,7 @@ public class TextMatrix {
             txt.setStyle("-fx-font-size:15");
             txt.setTranslateY(9);
             txt.setPrefHeight(5);
-            txt.setPrefWidth(40);
+            txt.setPrefWidth(47);
             nodeArray[i][j] = txt;
             matrix.add(nodeArray[i][j], j, i);
         }
@@ -634,7 +635,7 @@ public class TextMatrix {
             txt.setStyle("-fx-font-size:15");
             txt.setTranslateY(9);
             txt.setPrefHeight(5);
-            txt.setPrefWidth(40);
+            txt.setPrefWidth(47);
             nodeArray[i][j] = txt;
             matrix.add(nodeArray[i][j], j, i);
         }
@@ -643,7 +644,7 @@ public class TextMatrix {
             txt.setStyle("-fx-font-size:15");
             txt.setTranslateY(9);
             txt.setPrefHeight(5);
-            txt.setPrefWidth(40);
+            txt.setPrefWidth(47);
             nodeArray[i][j] = txt;
             matrix.add(nodeArray[i][j], j, i);
         }
@@ -679,7 +680,7 @@ public class TextMatrix {
                         System.out.println("txt.setStyle(\"-fx-font-size:15\");");
                         System.out.println("txt.setTranslateY(9);");
                         System.out.println("txt.setPrefHeight(5);");
-                        System.out.println("txt.setPrefWidth(40);");
+                        System.out.println("txt.setPrefWidth(47);");
                         System.out.println("txt.setUserData(" + constant + ");");
                         System.out.println("nodeArray[i][j] = txt;");
                         System.out.println("matrix.add(nodeArray[i][j], j, i);");

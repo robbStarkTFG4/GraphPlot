@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package testing3d.util;
+package testing3d.equation;
 
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.layout.GridPane;
+import testing3d.util.PropertyWrapper;
 
 /**
  *

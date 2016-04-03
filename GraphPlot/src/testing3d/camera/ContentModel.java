@@ -157,6 +157,7 @@ public class ContentModel {
             mouseOldY = event.getSceneY();
 
         } else if (event.getEventType() == MouseEvent.MOUSE_DRAGGED) {
+
             double modifier = event.isControlDown() ? 0.1 : event.isShiftDown() ? 3.0 : 1.0;
 
             mouseOldX = mousePosX;
@@ -173,6 +174,7 @@ public class ContentModel {
                 cameraXform.setRy(cameraXform.ry.getAngle() - yFlip * mouseDeltaX * modifierFactor * modifier * 2.0);
                 cameraXform.setRx(cameraXform.rx.getAngle() + xFlip * mouseDeltaY * modifierFactor * modifier * 2.0);
             } else if (event.isSecondaryButtonDown()) {
+                System.out.println("hola crayola");
                 double z = cameraPosition.getZ();
                 double newZ = z - xFlip * (mouseDeltaX + mouseDeltaY) * modifierFactor * modifier;
                 cameraPosition.setZ(newZ);
@@ -215,6 +217,10 @@ public class ContentModel {
     /*
     Public methods
      */
+    public Translate getCameraPosition() {
+        return cameraPosition;
+    }
+
     public SubScene getSubScene() {
         return subScene;
     }

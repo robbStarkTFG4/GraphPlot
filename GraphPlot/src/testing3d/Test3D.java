@@ -8,6 +8,7 @@ package testing3d;
 import de.jensd.fx.glyphs.GlyphsDude;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.AmbientLight;
@@ -16,6 +17,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -32,9 +34,9 @@ import javafx.stage.Stage;
 import org.fxyz.shapes.composites.SurfacePlot;
 import testing3d.camera.ContentModel;
 import testing3d.util.HiddenPane;
-import testing3d.util.MatrixPane;
+import testing3d.equation.MatrixPane;
 import testing3d.util.SurfaceManager;
-import testing3d.util.TextMatrix;
+import testing3d.equation.TextMatrix;
 
 /**
  *
@@ -173,12 +175,30 @@ public class Test3D extends Application {
         VBox controlsPane = new VBox();
         controlsPane.setStyle("-fx-background-color:rgba(95,158,160,0.5)");
         Button plus = new Button();
+        plus.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                final double modifierFactor = 0.3;
+                double xFlip = -1;
+                double z = content.getCameraPosition().getZ();
+                double newZ = z - xFlip * (1 + 1) * modifierFactor * 7;
+                content.getCameraPosition().setZ(newZ);
+            }
+        });
         GlyphsDude.setIcon(plus, FontAwesomeIcon.PLUS, "2em");
         plus.applyCss();
 
-        System.out.println("Button width: " + plus.getWidth());
-
         Button minus = new Button();
+        minus.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                final double modifierFactor = 0.3;
+                double xFlip = 1;
+                double z = content.getCameraPosition().getZ();
+                double newZ = z - xFlip * (1 + 1) * modifierFactor * 7;
+                content.getCameraPosition().setZ(newZ);
+            }
+        });
         GlyphsDude.setIcon(minus, FontAwesomeIcon.MINUS, "2em");
 
         controlsPane.getChildren().add(plus);
