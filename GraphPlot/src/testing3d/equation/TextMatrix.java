@@ -62,6 +62,13 @@ public class TextMatrix {
                     case "Paraboloide hiperbolico":
                         paraboloideHiperbolico(i, j, matrix);
                         break;
+                    case "Torus":
+                        torus(i, j, matrix);
+                        break;
+                    case "Cilindro":
+                        cylinder(i, j, matrix);
+                        createProperties();
+                        break;
                 }
             }
 
@@ -556,6 +563,72 @@ public class TextMatrix {
         }
     }
 
+    private void torus(int i, int j, GridPane matrix) {
+        if (i == 1 && j == 0) {
+            Text txt = new Text("( ");
+            txt.setStyle("-fx-font-size:25");
+            txt.setTranslateY(10);
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        if (i == 1 && j == 1) {
+            TextField txt = new TextField("25");
+            txt.setStyle("-fx-font-size:15");
+            txt.setTranslateY(9);
+            txt.setPrefHeight(5);
+            txt.setPrefWidth(45);
+            txt.setUserData("c");
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        if (i == 1 && j == 2) {
+            Text txt = new Text(" - ");
+            txt.setStyle("-fx-font-size:25");
+            txt.setTranslateY(10);
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        if (i == 1 && j == 3) {
+            Text txt = new Text("(x^2+y^2)^0.5)");
+            txt.setStyle("-fx-font-size:25");
+            txt.setTranslateY(10);
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        if (i == 1 && j == 4) {
+            Text txt = new Text(" + ");
+            txt.setStyle("-fx-font-size:25");
+            txt.setTranslateY(10);
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        if (i == 1 && j == 5) {
+            Text txt = new Text("z^2");
+            txt.setStyle("-fx-font-size:25");
+            txt.setTranslateY(10);
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        if (i == 1 && j == 6) {
+            Text txt = new Text("  =");
+            txt.setStyle("-fx-font-size:25");
+            txt.setTranslateY(10);
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        if (i == 1 && j == 7) {
+            TextField txt = new TextField("25");
+            txt.setStyle("-fx-font-size:15");
+            txt.setTranslateY(9);
+            txt.setPrefHeight(5);
+            txt.setPrefWidth(45);
+            txt.setUserData("a");
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        createProperties();
+    }
+
     private void conoEliptico(int i, int j, GridPane matrix) {
         if (i == 0 && j == 0) {
             Text txt = new Text("x^2");
@@ -645,6 +718,74 @@ public class TextMatrix {
             txt.setTranslateY(9);
             txt.setPrefHeight(5);
             txt.setPrefWidth(47);
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+    }
+
+    private void cylinder(int i, int j, GridPane matrix) {
+        if (i == 0 && j == 0) {
+            Text txt = new Text("x^2");
+            txt.setStyle("-fx-font-size:25");
+            txt.setTranslateY(10);
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        if (i == 0 && j == 2) {
+            Text txt = new Text("y^2");
+            txt.setStyle("-fx-font-size:25");
+            txt.setTranslateY(10);
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        if (i == 1 && j == 0) {
+            Rectangle rect = new Rectangle(40, 2);
+            rect.setTranslateY(6);
+            matrix.add(rect, j, i);
+        }
+        if (i == 1 && j == 1) {
+            Text txt = new Text("  +");
+            txt.setStyle("-fx-font-size:25");
+            txt.setTranslateY(10);
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        if (i == 1 && j == 2) {
+            Rectangle rect = new Rectangle(40, 2);
+            rect.setTranslateY(6);
+            matrix.add(rect, j, i);
+        }
+        if (i == 1 && j == 3) {
+            Text txt = new Text("  =");
+            txt.setStyle("-fx-font-size:25");
+            txt.setTranslateY(10);
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        if (i == 1 && j == 4) {
+            Text txt = new Text(" 1");
+            txt.setStyle("-fx-font-size:25");
+            txt.setTranslateY(10);
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        if (i == 2 && j == 0) {
+            TextField txt = new TextField("25");
+            txt.setStyle("-fx-font-size:15");
+            txt.setTranslateY(9);
+            txt.setPrefHeight(5);
+            txt.setPrefWidth(45);
+            txt.setUserData("a");
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        if (i == 2 && j == 2) {
+            TextField txt = new TextField("25");
+            txt.setStyle("-fx-font-size:15");
+            txt.setTranslateY(9);
+            txt.setPrefHeight(5);
+            txt.setPrefWidth(45);
+            txt.setUserData("b");
             nodeArray[i][j] = txt;
             matrix.add(nodeArray[i][j], j, i);
         }

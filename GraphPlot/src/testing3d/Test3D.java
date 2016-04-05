@@ -8,6 +8,8 @@ package testing3d;
 import de.jensd.fx.glyphs.GlyphsDude;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
@@ -35,7 +37,7 @@ import org.fxyz.shapes.composites.SurfacePlot;
 import testing3d.camera.ContentModel;
 import testing3d.util.HiddenPane;
 import testing3d.equation.MatrixPane;
-import testing3d.util.SurfaceManager;
+import testing3d.surfaces.SurfaceManager;
 import testing3d.equation.TextMatrix;
 
 /**
@@ -127,14 +129,17 @@ public class Test3D extends Application {
 
     Group innerGroup = new Group();// here i add "plot" group
 
-    final String[][] surfaceTags = {{"Elipsoide", "Hiperboloide una hoja", "Hiperboloide dos hojas"}, {"Cono eliptico", "Paraboloide eliptico", "Paraboloide hiperbolico"}};
+    final String[][] surfaceTags = {{"Elipsoide", "Hiperboloide una hoja", "Hiperboloide dos hojas"}, {"Cono eliptico", "Paraboloide eliptico", "Paraboloide hiperbolico"}, {"Torus", "Cilindro", "NA"}};
     private Pane equationPane;
     private MatrixPane matrix;
     private SurfaceManager surf;
+    private final StringProperty title = new SimpleStringProperty("GraphPlot");
+
+    private Stage stageRef;
 
     @Override
     public void start(Stage primaryStage) {
-
+        stageRef = primaryStage;
         initRoot();
 
         setUpTopMenu(screen, plotWidth, root);
@@ -143,9 +148,10 @@ public class Test3D extends Application {
         slidePane(plotWidth, plotHeight);
 
         Scene scene = new Scene(root, plotWidth, screen.getHeight());
-        primaryStage.setTitle("GraphPlot");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+
+        stageRef.setScene(scene);
+        stageRef.titleProperty().bind(title);
+        stageRef.show();
     }
 
     private void initRoot() {
@@ -157,18 +163,18 @@ public class Test3D extends Application {
         content = new ContentModel(plotWidth, plotHeight, 40);
         mainPanel.getChildren().add(content.getSubScene());
 
-        double valX = plotWidth / 300;
-        double resX = (valX * 300) - 300;
+        double valX = plotWidth / 425;
+        double resX = (valX * 425) - 425;
 
         double valY = plotHeight / 150;
         double resY = (valY * 150) - 150;
 
         equationPane = new Pane();
-        equationPane.setStyle("-fx-background-color:rgba(95,158,160,0.5)");
+        equationPane.setStyle("-fx-background-color:rgba(95,158,160,0.3)");
         matrix = new TextMatrix("Hiperboloide dos hojas").getMatrix();
         equationPane.getChildren().add(matrix);
 
-        SubScene scene = new SubScene(equationPane, 300, 150);
+        SubScene scene = new SubScene(equationPane, 425, 150);
         scene.setTranslateX((-1 * resX / 2) * 0.95);
         scene.setTranslateY((-1 * resY / 2) * 0.9);
 
@@ -181,7 +187,7 @@ public class Test3D extends Application {
                 final double modifierFactor = 0.3;
                 double xFlip = -1;
                 double z = content.getCameraPosition().getZ();
-                double newZ = z - xFlip * (1 + 1) * modifierFactor * 7;
+                double newZ = z - xFlip * (1 + 1) * modifierFactor * 10;
                 content.getCameraPosition().setZ(newZ);
             }
         });
@@ -195,7 +201,7 @@ public class Test3D extends Application {
                 final double modifierFactor = 0.3;
                 double xFlip = 1;
                 double z = content.getCameraPosition().getZ();
-                double newZ = z - xFlip * (1 + 1) * modifierFactor * 7;
+                double newZ = z - xFlip * (1 + 1) * modifierFactor * 10;
                 content.getCameraPosition().setZ(newZ);
             }
         });
@@ -215,6 +221,7 @@ public class Test3D extends Application {
 
         surf = new SurfaceManager(plot);
 
+        changeWindownTitle("Hiperboloide dos hojas");
         surf.changeSurface("Hiperboloide dos hojas", matrix.getPropertyList());
         innerGroup.getChildren().add(plot);
 
@@ -261,55 +268,80 @@ public class Test3D extends Application {
         pane.setVgap(7);
         pane.setPadding(new Insets(20));
 
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 3; j++) {
-                Button btn = new Button(surfaceTags[i][j]);
+        for (int i = 0; i < 3; i++) {//2
+            for (int j = 0; j < 3; j++) {//3
                 final String tag = surfaceTags[i][j];
-                btn.setUserData(tag);
-                btn.setOnMouseClicked(d -> {
-                    switch (tag) {
-                        case "Elipsoide":
-                            destroyLink();
-                            switchEquation(tag);
-                            switchSurface(tag);
-                            menuPane.hide();
-                            break;
-                        case "Hiperboloide una hoja":
-                            destroyLink();
-                            switchEquation(tag);
-                            switchSurface(tag);
-                            menuPane.hide();
-                            break;
-                        case "Hiperboloide dos hojas":
-                            destroyLink();
-                            switchEquation(tag);
-                            switchSurface(tag);
-                            menuPane.hide();
-                            break;
-                        case "Cono eliptico":
-                            destroyLink();
-                            switchEquation(tag);
-                            switchSurface(tag);
-                            menuPane.hide();
-                            break;
-                        case "Paraboloide eliptico":
-                            destroyLink();
-                            switchEquation(tag);
-                            switchSurface(tag);
-                            menuPane.hide();
-                            break;
-                        case "Paraboloide hiperbolico":
-                            destroyLink();
-                            switchEquation(tag);
-                            switchSurface(tag);
-                            menuPane.hide();
-                            break;
-                    }
-                });
-                btn.setPrefWidth(270);
-                btn.setStyle("-fx-font-size:20");
-                btn.setPadding(new Insets(25));
-                pane.add(btn, j, i);
+                if (!tag.equals("NA"));
+                {
+                    Button btn = new Button(surfaceTags[i][j]);
+
+                    btn.setUserData(tag);
+                    btn.setOnMouseClicked(d -> {
+                        switch (tag) {
+                            case "Elipsoide":
+                                changeWindownTitle(tag);
+                                destroyLink();
+                                switchEquation(tag);
+                                switchSurface(tag);
+                                menuPane.hide();
+                                break;
+                            case "Hiperboloide una hoja":
+                                changeWindownTitle(tag);
+                                destroyLink();
+                                switchEquation(tag);
+                                switchSurface(tag);
+                                menuPane.hide();
+                                break;
+                            case "Hiperboloide dos hojas":
+                                changeWindownTitle(tag);
+                                destroyLink();
+                                switchEquation(tag);
+                                switchSurface(tag);
+                                menuPane.hide();
+                                break;
+                            case "Cono eliptico":
+                                changeWindownTitle(tag);
+                                destroyLink();
+                                switchEquation(tag);
+                                switchSurface(tag);
+                                menuPane.hide();
+                                break;
+                            case "Paraboloide eliptico":
+                                changeWindownTitle(tag);
+                                destroyLink();
+                                switchEquation(tag);
+                                switchSurface(tag);
+                                menuPane.hide();
+                                break;
+                            case "Paraboloide hiperbolico":
+                                changeWindownTitle(tag);
+                                destroyLink();
+                                switchEquation(tag);
+                                switchSurface(tag);
+                                menuPane.hide();
+                                break;
+                            //"Torus", "Cilindro"
+                            case "Torus":
+                                changeWindownTitle(tag);
+                                destroyLink();
+                                switchEquation(tag);
+                                switchSurface(tag);
+                                menuPane.hide();
+                                break;
+                            case "Cilindro":
+                                changeWindownTitle(tag);
+                                destroyLink();
+                                switchEquation(tag);
+                                switchSurface(tag);
+                                menuPane.hide();
+                                break;
+                        }
+                    });
+                    btn.setPrefWidth(270);
+                    btn.setStyle("-fx-font-size:20");
+                    btn.setPadding(new Insets(25));
+                    pane.add(btn, j, i);
+                }
             }
         }
         return pane;
@@ -473,6 +505,10 @@ public class Test3D extends Application {
 
     private void destroyLink() {
 
+    }
+
+    private void changeWindownTitle(String string) {
+        title.set("GraphPlot " + string);
     }
 
 }

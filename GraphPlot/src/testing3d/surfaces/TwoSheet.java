@@ -38,7 +38,8 @@ public class TwoSheet implements Surface {
 
         int numVerts = (int) (tubeDivisions * radiusDivisions);
         int faceCount = numVerts * 2;
-        float[] points = new float[numVerts * 3 * 4],
+        float[] points = new float[numVerts * 3 * 4];
+                float[] points2 = new float[numVerts * 3 * 4],
                 texCoords = new float[numVerts * 2];
         int[] faces = new int[faceCount * 6];
         int pointIndex = 0, texIndex = 0, faceIndex = 0;
@@ -80,6 +81,49 @@ public class TwoSheet implements Surface {
             sp.setTranslateX(points[i + 0]);
             sp.setTranslateY(points[i + 1]);
             sp.setTranslateZ(points[i + 2]);
+            /*sp.setTranslateX(arrayX[x]);
+            sp.setTranslateY(arrayYN[x]);
+            sp.setTranslateZ(arrayZN[x]);*/
+            plot.getChildren().add(sp);
+
+        }
+        
+        ///// SECOND PART
+        pointIndex=0;
+         for (int tubeIndex = -tubeDivisions; tubeIndex < tubeDivisions; tubeIndex++) {
+
+            float radian = 1 * tubeIndex * 2.0f * 3.141592653589793f;
+
+            for (int radiusIndex = -radiusDivisions; radiusIndex < radiusDivisions; radiusIndex++) {
+
+                /* x = asinhucosv(2)
+                y = asinhusinv(3)
+                z = ccoshu*/
+                //double v = radiusIndex * 0.0116 * radiusDivisions + 1.5683;
+                double v = radiusIndex * 0.0116 * radiusDivisions + 1.5683;
+
+                points2[pointIndex + 0] = x = (float) (aProperty.getValue() * 1 * (Math.sinh(tubeIndex)) * (Math.cos(v)));
+                points2[pointIndex + 1] = y = (float) (bProperty.getValue() * 1 * (Math.sinh(tubeIndex) * (Math.sin(v))));
+                points2[pointIndex + 2] = z = (float) (-1*cProperty.getValue() * (Math.cosh(tubeIndex)));
+
+                /*System.out.println("x: " + points[pointIndex + 0]);
+                System.out.println("y: " + points[pointIndex + 1]);
+                System.out.println("z: " + points[pointIndex + 2]);*/
+                pointIndex += 3;
+
+            }
+
+        }
+
+        //plot = new Group();
+    
+        //System.out.println("cantidad puntos: " + amount);
+        for (int i = 0; i < points2.length; i += 3) {
+            Sphere sp = new Sphere(0.7);
+            sp.setMaterial(new PhongMaterial(Color.BLACK));
+            sp.setTranslateX(points2[i + 0]);
+            sp.setTranslateY(points2[i + 1]);
+            sp.setTranslateZ(points2[i + 2]);
             /*sp.setTranslateX(arrayX[x]);
             sp.setTranslateY(arrayYN[x]);
             sp.setTranslateZ(arrayZN[x]);*/
