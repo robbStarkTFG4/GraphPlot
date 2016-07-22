@@ -86,5 +86,14 @@ public class Ellipsoid implements Surface {
             plot.getChildren().add(sp);
 
         }
+        /*Sphere sp = new Sphere(5);
+        sp.setMaterial(new PhongMaterial(Color.BLUEVIOLET));
+        sp.setTranslateX(20);
+        sp.setTranslateY(0);
+        sp.setTranslateZ(20);
+        /*sp.setTranslateX(arrayX[x]);
+            sp.setTranslateY(arrayYN[x]);
+            sp.setTranslateZ(arrayZN[x]);*/
+        //plot.getChildren().add(sp);
     }
 }

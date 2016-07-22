@@ -8,12 +8,16 @@ package testing3d.surfaces;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Group;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.PhongMaterial;
+import javafx.scene.shape.Sphere;
 import testing3d.util.PropertyWrapper;
+import testing3d.util.Punto2D;
 import testing3d.util.Surface;
 
 /**
@@ -32,7 +36,7 @@ public class SurfaceManager {
         this.plot = plot;
     }
 
-    private void destroySurface() {
+    public void destroySurface() {
         if (plot != null) {
             if (plot.getChildren().size() > 0) {
                 plot.getChildren().clear();
@@ -64,10 +68,10 @@ public class SurfaceManager {
                 setUpTwoSheet();
                 break;
             case "Cono eliptico":
-
+                setUpEllipticalCone();
                 break;
             case "Paraboloide eliptico":
-
+                setUpEllipticParaboloid();
                 break;
             case "Paraboloide hiperbolico":
 
@@ -116,8 +120,8 @@ public class SurfaceManager {
     private void setUpTwoSheet() {
         constantsMap.clear();
 
-        DoubleProperty aProperty = new SimpleDoubleProperty(null, "a", 10);
-        DoubleProperty bProperty = new SimpleDoubleProperty(null, "b", 15);
+        DoubleProperty aProperty = new SimpleDoubleProperty(null, "a", 40);
+        DoubleProperty bProperty = new SimpleDoubleProperty(null, "b", 42);
         DoubleProperty cProperty = new SimpleDoubleProperty(null, "c", 45);
 
         constantsMap.put("a", aProperty);
@@ -129,6 +133,22 @@ public class SurfaceManager {
         addListeners();
     }
 
+    private void setUpEllipticalCone() {
+        constantsMap.clear();
+
+        DoubleProperty aProperty = new SimpleDoubleProperty(null, "a", 10);
+        DoubleProperty bProperty = new SimpleDoubleProperty(null, "b", 15);
+        DoubleProperty cProperty = new SimpleDoubleProperty(null, "c", 45);
+
+        constantsMap.put("a", aProperty);
+        constantsMap.put("b", bProperty);
+        constantsMap.put("c", cProperty);
+
+        surf = new EllipticalCone(plot, aProperty, bProperty, cProperty);
+        surf.build();
+        addListeners();
+    }
+
     private void setUpTorus() {
         constantsMap.clear();
 
@@ -136,7 +156,6 @@ public class SurfaceManager {
         DoubleProperty cProperty = new SimpleDoubleProperty(null, "c", 45);
 
         constantsMap.put("a", aProperty);
-
         constantsMap.put("c", cProperty);
 
         surf = new Torus(plot, aProperty, cProperty);
@@ -161,18 +180,15 @@ public class SurfaceManager {
     private void addListeners() {
         for (Map.Entry<String, DoubleProperty> entry : constantsMap.entrySet()) {
             DoubleProperty db = entry.getValue();
-            for (PropertyWrapper wrap : propertyList) {
-                if (wrap.getName().equals(db.getName())) {
-                    wrap.getProperty().setValue(String.valueOf(db.doubleValue()));
-                    wrap.getProperty().addListener(new ChangeListener<String>() {
-                        @Override
-                        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                            db.set(Double.parseDouble(newValue));
-                            updateSurface();
-                        }
-                    });
-                }
-            }
+            propertyList.stream().filter((wrap) -> (wrap.getName().equals(db.getName()))).map((wrap) -> {
+                wrap.getProperty().setValue(String.valueOf(db.doubleValue()));
+                return wrap;
+            }).forEach((wrap) -> {
+                wrap.getProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+                    db.set(Double.parseDouble(newValue));
+                    updateSurface();
+                });
+            });
         }
 
     }
@@ -185,4 +201,98 @@ public class SurfaceManager {
     public void removeListeners() {
 
     }
+
+    public void drawCurves(Map<Integer, List<Punto2D>> curvesInfo, double afinador) {
+        for (Map.Entry<Integer, List<Punto2D>> entry : curvesInfo.entrySet()) {
+            Integer key = entry.getKey();
+            List<Punto2D> value = entry.getValue();
+            Random generator = new Random();
+
+            Color c = Color.rgb(generator.nextInt(255), generator.nextInt(255), generator.nextInt(255));
+            for (int i = 0; i < value.size(); i++) {
+
+                Punto2D punto2D = value.get(i);
+
+                Sphere sp = new Sphere(0.35);
+                sp.setMaterial(new PhongMaterial(c));
+                sp.setTranslateX(punto2D.getX_Point());
+                //if (punto2D.getY_Point() < 100) {
+                sp.setTranslateZ(punto2D.getY_Point() / afinador);
+                // } else {
+                //sp.setTranslateZ(punto2D.getY_Point() / 10);
+                //}
+                plot.getChildren().add(sp);
+            }
+        }
+    }
+
+    public void drawShape(List<Punto2D> points, double afinador, double amplificador) {
+        Random generator = new Random();
+        Color c = Color.rgb(generator.nextInt(255), generator.nextInt(255), generator.nextInt(255));
+        for (int i = 0; i < points.size(); i++) {
+
+            Punto2D punto2D = points.get(i);
+
+            Sphere sp = new Sphere(0.35);
+            sp.setMaterial(new PhongMaterial(c));
+            sp.setTranslateX(amplificador * punto2D.getX_Point());
+            //if (punto2D.getY_Point() < 100) {
+            sp.setTranslateZ(amplificador * punto2D.getY_Point() / afinador);
+            // } else {
+            //sp.setTranslateZ(punto2D.getY_Point() / 10);
+            //}
+            plot.getChildren().add(sp);
+        }
+    }
+
+    public void addDepth(List<Punto2D> points, double afinador, double amplificador) {
+        Random generator = new Random();
+        Color c = Color.rgb(generator.nextInt(255), generator.nextInt(255), generator.nextInt(255));
+        for (int j = 0; j < 10; j++) {
+
+            for (int i = 0; i < points.size(); i++) {
+
+                Punto2D punto2D = points.get(i);
+
+                Sphere sp = new Sphere(0.35);
+                sp.setMaterial(new PhongMaterial(c));
+                sp.setTranslateX(amplificador * punto2D.getX_Point());
+                sp.setTranslateY(j + 1);
+                sp.setTranslateZ(amplificador * punto2D.getY_Point() / afinador);
+
+                plot.getChildren().add(sp);
+            }
+        }
+
+        for (int j = 0; j < 10; j++) {
+
+            for (int i = 0; i < points.size(); i++) {
+
+                Punto2D punto2D = points.get(i);
+
+                Sphere sp = new Sphere(0.35);
+                sp.setMaterial(new PhongMaterial(c));
+                sp.setTranslateX(amplificador * punto2D.getX_Point());
+                sp.setTranslateY(-1 * j - 1);
+                sp.setTranslateZ(amplificador * punto2D.getY_Point() / afinador);
+
+                plot.getChildren().add(sp);
+            }
+        }
+    }
+
+    private void setUpEllipticParaboloid() {
+        constantsMap.clear();
+
+        DoubleProperty aProperty = new SimpleDoubleProperty(null, "a", 5);
+        DoubleProperty bProperty = new SimpleDoubleProperty(null, "b", 5);
+
+        constantsMap.put("a", aProperty);
+        constantsMap.put("b", bProperty);
+
+        surf = new EllipticParaboloid(plot, aProperty, bProperty);
+        surf.build();
+        addListeners();
+    }
+
 }

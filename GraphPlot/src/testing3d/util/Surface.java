@@ -6,7 +6,7 @@
 package testing3d.util;
 
 /**
- *
+ * Interface used as contract to all surface`s on the 3D scene
  * @author marcoisaac
  */
 public interface Surface {

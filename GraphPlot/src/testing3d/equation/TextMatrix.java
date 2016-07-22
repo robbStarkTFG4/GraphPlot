@@ -5,42 +5,53 @@
  */
 package testing3d.equation;
 
+import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 import testing3d.util.PropertyWrapper;
 
 /**
  *
  * @author marcoisaac
  */
-public class TextMatrix {
-
+public class TextMatrix extends Application {
+    
     private final static int ROWS = 3;
-    private final static int COLLUMNS = 8;
+    private final static int COLLUMNS = 12;
     private final Node[][] nodeArray = new Node[ROWS][COLLUMNS];
     private final MatrixPane matrix;
-
+    
     public TextMatrix() {
         matrix = new MatrixPane();
         matrix.setPadding(new Insets(12));
-
+        
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLLUMNS; j++) {
-                elipsoide(i, j, matrix);
+                // elipsoide(i, j, matrix);
+                //dataEntry(j, i, matrix);
+                //circleEquation(i, j, matrix);
+                ellipseEquation(i, j, matrix);
             }
         }
-
+        
     }
-
+    
     public TextMatrix(final String tag) {
         matrix = new MatrixPane();
         matrix.setPadding(new Insets(12));
-
+        
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLLUMNS; j++) {
                 switch (tag) {
@@ -71,49 +82,21 @@ public class TextMatrix {
                         break;
                 }
             }
-
+            
         }
-
+        
     }
-
-    /*
-    Usage
-    @Override  
-    public void start(Stage primaryStage) {
-
-        Rectangle2D screen = Screen.getPrimary().getVisualBounds();
-
-        TextMatrix test = new TextMatrix();
-
-        FlowPane root = new FlowPane();
-        root.setOrientation(Orientation.VERTICAL);
-        root.setPrefWidth(screen.getWidth());
-        root.setMinWidth(screen.getWidth());
-        root.getChildren().add(matrix);
-        root.setVgap(20);
-
-        Button btn = new Button("Print");
-        btn.setOnMouseClicked(d -> {
-            printArray();
-        });
-
-        root.getChildren().add(btn);
-        Scene scene = new Scene(root, screen.getWidth(), screen.getHeight());
-
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
-    }*/
+    
     public Node[][] getNodeArray() {
         return nodeArray;
     }
-
+    
     public MatrixPane getMatrix() {
         return matrix;
     }
-
+    
     private void paraboloideEliptico(int i, int j, GridPane matrix) {
-
+        
         if (i == 0 && j == 3) {
             Text txt = new Text("x^2");
             txt.setStyle("-fx-font-size:25");
@@ -165,6 +148,7 @@ public class TextMatrix {
             txt.setTranslateY(9);
             txt.setPrefHeight(5);
             txt.setPrefWidth(47);
+            txt.setUserData("a");
             nodeArray[i][j] = txt;
             matrix.add(nodeArray[i][j], j, i);
         }
@@ -174,22 +158,24 @@ public class TextMatrix {
             txt.setTranslateY(9);
             txt.setPrefHeight(5);
             txt.setPrefWidth(47);
+            txt.setUserData("b");
             nodeArray[i][j] = txt;
             matrix.add(nodeArray[i][j], j, i);
         }
+        createProperties();
     }
-
+    
     private void dataEntry(int j, int i, GridPane matrix) {
         TextField txt = new TextField("change");
         txt.setPrefWidth(50);
         if ((j % 2) == 0) {
             //txt.set("-fx-fill: red");
         }
-
+        
         nodeArray[i][j] = txt;
         matrix.add(nodeArray[i][j], j, i);
     }
-
+    
     private void twoSheetHyperboloid(int i, int j, GridPane matrix) {
         if (i == 0 && j == 0) {
             Text txt = new Text("z^2");
@@ -287,7 +273,153 @@ public class TextMatrix {
         }
         createProperties();
     }
-
+    
+    private void ellipseEquation(int i, int j, GridPane matrix) {
+        if (i == 1 && j == 0) {
+            Text txt = new Text("[(x  -");
+            txt.setStyle("-fx-font-size:25");
+            txt.setTranslateY(10);
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        if (i == 1 && j == 1) {
+            TextField txt = new TextField("25");
+            txt.setStyle("-fx-font-size:15");
+            txt.setTranslateY(9);
+            txt.setPrefHeight(5);
+            txt.setPrefWidth(47);
+            txt.setUserData("h");
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        if (i == 1 && j == 2) {
+            Text txt = new Text(")^2]/");
+            txt.setStyle("-fx-font-size:25");
+            txt.setTranslateY(10);
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        if (i == 1 && j == 3) {
+            TextField txt = new TextField("25");
+            txt.setStyle("-fx-font-size:15");
+            txt.setTranslateY(9);
+            txt.setPrefHeight(5);
+            txt.setPrefWidth(47);
+            txt.setUserData("a");
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        if (i == 1 && j == 4) {
+            Text txt = new Text("  +  ");
+            txt.setStyle("-fx-font-size:25");
+            txt.setTranslateY(10);
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        if (i == 1 && j == 5) {
+            Text txt = new Text("[(y  - ");
+            txt.setStyle("-fx-font-size:25");
+            txt.setTranslateY(10);
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        if (i == 1 && j == 6) {
+            TextField txt = new TextField("25");
+            txt.setStyle("-fx-font-size:15");
+            txt.setTranslateY(9);
+            txt.setPrefHeight(5);
+            txt.setPrefWidth(47);
+            txt.setUserData("k");
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        if (i == 1 && j == 7) {
+            Text txt = new Text(")^2]/");
+            txt.setStyle("-fx-font-size:25");
+            txt.setTranslateY(10);
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        if (i == 1 && j == 8) {
+            TextField txt = new TextField("25");
+            txt.setStyle("-fx-font-size:15");
+            txt.setTranslateY(9);
+            txt.setPrefHeight(5);
+            txt.setPrefWidth(47);
+            txt.setUserData("b");
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        if (i == 1 && j == 9) {
+            Text txt = new Text("   =  1");
+            txt.setStyle("-fx-font-size:25");
+            txt.setTranslateY(10);
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+    }
+    
+    private void circleEquation(int i, int j, GridPane matrix) {
+        if (i == 1 && j == 0) {
+            Text txt = new Text("(x  -");
+            txt.setStyle("-fx-font-size:25");
+            txt.setTranslateY(10);
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        if (i == 1 && j == 1) {
+            TextField txt = new TextField("25");
+            txt.setStyle("-fx-font-size:15");
+            txt.setTranslateY(9);
+            txt.setPrefHeight(5);
+            txt.setPrefWidth(47);
+            txt.setUserData("h");
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        if (i == 1 && j == 2) {
+            Text txt = new Text(")^2  +");
+            txt.setStyle("-fx-font-size:25");
+            txt.setTranslateY(10);
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        if (i == 1 && j == 3) {
+            Text txt = new Text("(y  -");
+            txt.setStyle("-fx-font-size:25");
+            txt.setTranslateY(10);
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        if (i == 1 && j == 4) {
+            TextField txt = new TextField("25");
+            txt.setStyle("-fx-font-size:15");
+            txt.setTranslateY(9);
+            txt.setPrefHeight(5);
+            txt.setPrefWidth(47);
+            txt.setUserData("k");
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        if (i == 1 && j == 5) {
+            Text txt = new Text(")^2=");
+            txt.setStyle("-fx-font-size:25");
+            txt.setTranslateY(10);
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+        if (i == 1 && j == 6) {
+            TextField txt = new TextField("25");
+            txt.setStyle("-fx-font-size:15");
+            txt.setTranslateY(9);
+            txt.setPrefHeight(5);
+            txt.setPrefWidth(47);
+            txt.setUserData("r");
+            nodeArray[i][j] = txt;
+            matrix.add(nodeArray[i][j], j, i);
+        }
+    }
+    
     private void oneSheetHyperboloid(int i, int j, GridPane matrix) {
         if (i == 0 && j == 0) {
             Text txt = new Text("x^2");
@@ -385,7 +517,7 @@ public class TextMatrix {
         }
         createProperties();
     }
-
+    
     private void elipsoide(int i, int j, MatrixPane matrix) {
 
         ///////////////// INSERT CODE HERE
@@ -485,7 +617,7 @@ public class TextMatrix {
         }
         createProperties();
     }
-
+    
     private void createProperties() {
         matrix.clearList();
         for (Node[] node : nodeArray) {
@@ -496,7 +628,7 @@ public class TextMatrix {
             }
         }
     }
-
+    
     private void paraboloideHiperbolico(int i, int j, GridPane matrix) {
         if (i == 0 && j == 3) {
             Text txt = new Text("y^2");
@@ -562,7 +694,7 @@ public class TextMatrix {
             matrix.add(nodeArray[i][j], j, i);
         }
     }
-
+    
     private void torus(int i, int j, GridPane matrix) {
         if (i == 1 && j == 0) {
             Text txt = new Text("( ");
@@ -628,7 +760,7 @@ public class TextMatrix {
         }
         createProperties();
     }
-
+    
     private void conoEliptico(int i, int j, GridPane matrix) {
         if (i == 0 && j == 0) {
             Text txt = new Text("x^2");
@@ -669,7 +801,7 @@ public class TextMatrix {
             matrix.add(rect, j, i);
         }
         if (i == 1 && j == 3) {
-            Text txt = new Text(" +  ");
+            Text txt = new Text(" -  ");
             txt.setStyle("-fx-font-size:25");
             txt.setTranslateY(10);
             nodeArray[i][j] = txt;
@@ -700,6 +832,7 @@ public class TextMatrix {
             txt.setTranslateY(9);
             txt.setPrefHeight(5);
             txt.setPrefWidth(47);
+            txt.setUserData("a");
             nodeArray[i][j] = txt;
             matrix.add(nodeArray[i][j], j, i);
         }
@@ -709,6 +842,7 @@ public class TextMatrix {
             txt.setTranslateY(9);
             txt.setPrefHeight(5);
             txt.setPrefWidth(47);
+            txt.setUserData("b");
             nodeArray[i][j] = txt;
             matrix.add(nodeArray[i][j], j, i);
         }
@@ -718,11 +852,13 @@ public class TextMatrix {
             txt.setTranslateY(9);
             txt.setPrefHeight(5);
             txt.setPrefWidth(47);
+            txt.setUserData("c");
             nodeArray[i][j] = txt;
             matrix.add(nodeArray[i][j], j, i);
         }
+        createProperties();
     }
-
+    
     private void cylinder(int i, int j, GridPane matrix) {
         if (i == 0 && j == 0) {
             Text txt = new Text("x^2");
@@ -797,7 +933,7 @@ public class TextMatrix {
     public static void main(String[] args) {
         launch(args);
     }
-
+    
     public void printArray() {
         System.out.println("//////////////////////// BEGIN CODE");
         for (int i = 0; i < ROWS; i++) {
@@ -838,5 +974,29 @@ public class TextMatrix {
         }
         System.out.println("//////////////////////// END CODE");
     }
+    
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Rectangle2D screen = Screen.getPrimary().getVisualBounds();
 
+        //TextMatrix test = new TextMatrix();
+        FlowPane root = new FlowPane();
+        root.setOrientation(Orientation.VERTICAL);
+        root.setPrefWidth(screen.getWidth());
+        root.setMinWidth(screen.getWidth());
+        root.getChildren().add(matrix);
+        root.setVgap(20);
+        
+        Button btn = new Button("Print");
+        btn.setOnMouseClicked(d -> {
+            printArray();
+        });
+        
+        root.getChildren().add(btn);
+        Scene scene = new Scene(root, screen.getWidth(), screen.getHeight());
+        
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+    
 }

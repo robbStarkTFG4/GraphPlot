@@ -74,9 +74,9 @@ public class OneSheet implements Surface {
         for (int i = 0; i < points.length; i += 3) {
             Sphere sp = new Sphere(0.7);
             sp.setMaterial(new PhongMaterial(Color.BLACK));
-            sp.setTranslateX(points[i + 0]);
-            sp.setTranslateY(points[i + 1]);
-            sp.setTranslateZ(points[i + 2]);
+            sp.setTranslateX(points[i + 0]/20);
+            sp.setTranslateY(points[i + 1]/20);
+            sp.setTranslateZ(points[i + 2]/10);
             /*sp.setTranslateX(arrayX[x]);
             sp.setTranslateY(arrayYN[x]);
             sp.setTranslateZ(arrayZN[x]);*/
