@@ -649,6 +649,7 @@ public class Test3D extends Application {
 
             aRadiusTxtCuadri.setText(String.valueOf(curvaInf2.getaRadius()));
             bRadiusTxtCuadri.setText(String.valueOf(curvaInf2.getbRadius()));
+            ampField.setText(String.valueOf(curvaInf2.getAmplificador()));
         }
 
         Button procesar = new Button("PROCESAR");
@@ -1489,6 +1490,9 @@ public class Test3D extends Application {
             equationPane.setVisible(false);
         }
         curvaInf2 = new CurvaDatos(h, k, Math.sqrt(a), Math.sqrt(b));
+        curvaInf2.setaRadius(aRadiusTxt.getText());
+        curvaInf2.setbRadius(bRadiusTxt.getText());
+        curvaInf2.setAmplificador(Double.parseDouble(ampField.getText()));
         curvaInf2.setTipo("ellip");
 
         drawShape(Double.parseDouble(afinField.getText()), Double.parseDouble(ampField.getText()));
