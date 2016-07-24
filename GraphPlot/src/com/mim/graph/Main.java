@@ -52,6 +52,9 @@ import com.mim.graph.util.HiddenPane;
 import com.mim.graph.equation.MatrixPane;
 import com.mim.graph.surfaces.SurfaceManager;
 import com.mim.graph.equation.TextMatrix;
+import com.mim.graph.help.CommandWindown;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 
 /**
  *
@@ -323,8 +326,15 @@ public class Main extends Application {
             cilindricasWindown();
         });
 
+        Button helpBtn = new Button("help");
+        helpBtn.setPadding(new Insets(7));
+        helpBtn.setOnMouseClicked(f -> {
+            CommandWindown cmd = new CommandWindown();
+            cmd.initOwner(stageRef);
+            cmd.show();
+        });
         // END EVENTS
-        topPane.getChildren().addAll(quadSurfaces, curvasNivelBtn, cilindricasBtn);
+        topPane.getChildren().addAll(quadSurfaces, curvasNivelBtn, cilindricasBtn, helpBtn);
         root.getChildren().addAll(topPane);
 
     }
@@ -1047,7 +1057,7 @@ public class Main extends Application {
                     Integer.parseInt(cMin.getText()), Integer.parseInt(cMax.getText()), Double.parseDouble(afinField.getText()));
             curvaInf.setTipo("otro");
 
-            drawCurvesPoints(Double.parseDouble(afinField.getText()));
+            drawCircleCurvesPoints(Double.parseDouble(afinField.getText()), 1);
         }
 
     }
@@ -1191,10 +1201,6 @@ public class Main extends Application {
         title.set("GraphPlot " + string);
     }
 
-    private void drawCurvesPoints(double afinador) {
-        surf.drawCurves(curvesInfo, afinador);
-    }
-
     private void curvasNivelCircleProccessInfo(TextField cMin, TextField cMax, Stage dialog, TextField afinField, String cExpr, double h, double k) {
         curvesInfo = new HashMap<>();
 
@@ -1251,21 +1257,21 @@ public class Main extends Application {
         curvaInf.setTipo("circle");
         curvaInf.setEcuacion(cExpr);
 
-        drawCircleCurvesPoints(Double.parseDouble(afinField.getText()),1);
+        drawCircleCurvesPoints(Double.parseDouble(afinField.getText()), 1);
 
     }
 
-    private void drawCircleCurvesPoints(double parseDouble,int pos) {
-        switch(pos){
+    private void drawCircleCurvesPoints(double parseDouble, int pos) {
+        switch (pos) {
             case 1://curves
-                  surf.drawCurves(curvesInfo, parseDouble);
+                surf.drawCurves(curvesInfo, parseDouble);
                 break;
             case 2://polyLines
                 surf.drawPolyLines(curvesInfo, parseDouble);
                 break;
-                
+
         }
-       
+
     }
 
     private void ellipseNivelCircleProccessInfo(TextField cMin, TextField cMax, Stage dialog, TextField afinField, double h, double k, String aRadius, String bRadius) {
@@ -1330,7 +1336,7 @@ public class Main extends Application {
         curvaInf = new CurvaDatos(Integer.parseInt(cMin.getText()), Integer.parseInt(cMax.getText()), Double.parseDouble(afinField.getText()), h, k, aRadius, bRadius);
         curvaInf.setTipo("ellip");
 
-        drawCircleCurvesPoints(Double.parseDouble(afinField.getText()),1);
+        drawCircleCurvesPoints(Double.parseDouble(afinField.getText()), 1);
 
     }
 
@@ -1380,19 +1386,24 @@ public class Main extends Application {
         });
 
         if (curvaInf2 != null) {
-            switch (curvaInf2.getTipo()) {
-                case "otro":
-                    otroBtn.setSelected(true);
-                    rootCurvaNivel.getChildren().add(otroContent2(dialog));
-                    break;
-                case "circle":
-                    //circuloBtn.setSelected(true);
-                    //rootCurvaNivel.getChildren().add(circleContent2(dialog));
-                    break;
-                case "ellip":
-                    ellipseBtn.setSelected(true);
-                    rootCurvaNivel.getChildren().add(ellipseContent2(dialog));
-                    break;
+            if (curvaInf2.getTipo() != null) {
+                switch (curvaInf2.getTipo()) {
+                    case "otro":
+                        otroBtn.setSelected(true);
+                        rootCurvaNivel.getChildren().add(otroContent2(dialog));
+                        break;
+                    case "circle":
+                        //circuloBtn.setSelected(true);
+                        //rootCurvaNivel.getChildren().add(circleContent2(dialog));
+                        break;
+                    case "ellip":
+                        ellipseBtn.setSelected(true);
+                        rootCurvaNivel.getChildren().add(ellipseContent2(dialog));
+                        break;
+                }
+            } else {
+                otroBtn.setSelected(true);
+                rootCurvaNivel.getChildren().add(otroContent2(dialog));
             }
         } else {
             otroBtn.setSelected(true);

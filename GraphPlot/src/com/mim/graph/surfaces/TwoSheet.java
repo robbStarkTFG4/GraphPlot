@@ -5,12 +5,17 @@
  */
 package com.mim.graph.surfaces;
 
+import com.mim.graph.util.Punto2D;
 import javafx.beans.property.DoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 import com.mim.graph.util.Surface;
+import java.util.ArrayList;
+import java.util.List;
+import org.fxyz.geometry.Point3D;
+import org.fxyz.shapes.composites.PolyLine3D;
 
 /**
  *
@@ -49,13 +54,12 @@ public class TwoSheet implements Surface {
         int p0 = 0, p1 = 0, p2 = 0, p3 = 0, t0 = 0, t1 = 0, t2 = 0, t3 = 0;
         for (int tubeIndex = -tubeDivisions; tubeIndex < tubeDivisions; tubeIndex++) {
 
-            float radian = 1 * tubeIndex * 2.0f * 3.141592653589793f;
-
             for (int radiusIndex = -radiusDivisions; radiusIndex < radiusDivisions; radiusIndex++) {
 
                 //double v = radiusIndex * 0.0116 * radiusDivisions + 1.5683;
-                double v = radiusIndex * 0.0116 * radiusDivisions + 1.5683;
-                //double u = 0.2617 * tubeIndex + 3.1403;
+                double v = -0.9767 * radiusIndex + 3.1416;
+
+                // double v = radiusIndex * 0.0116 * radiusDivisions + 1.5683;
                 double u = 0.2617 * tubeIndex + 3.1403;
 
                 points[pointIndex + 0] = x = (float) (aProperty.getValue() * 1 * (Math.sinh(u)) * (Math.cos(v)));
@@ -68,18 +72,15 @@ public class TwoSheet implements Surface {
 
         }
 
-        //plot = new Group();
         double amount = points.length / 3;
-        //System.out.println("cantidad puntos: " + amount);
+
         for (int i = 0; i < points.length; i += 3) {
             Sphere sp = new Sphere(0.7);
             sp.setMaterial(new PhongMaterial(Color.BLACK));
             sp.setTranslateX(points[i + 0] / 40);
             sp.setTranslateY(points[i + 1] / 40);
             sp.setTranslateZ(points[i + 2] / 15);
-            /*sp.setTranslateX(arrayX[x]);
-            sp.setTranslateY(arrayYN[x]);
-            sp.setTranslateZ(arrayZN[x]);*/
+
             plot.getChildren().add(sp);
 
         }
@@ -87,8 +88,6 @@ public class TwoSheet implements Surface {
         ///// SECOND PART
         pointIndex = 0;
         for (int tubeIndex = -tubeDivisions; tubeIndex < tubeDivisions; tubeIndex++) {
-
-            float radian = 1 * tubeIndex * 2.0f * 3.141592653589793f;
 
             for (int radiusIndex = -radiusDivisions; radiusIndex < radiusDivisions; radiusIndex++) {
 

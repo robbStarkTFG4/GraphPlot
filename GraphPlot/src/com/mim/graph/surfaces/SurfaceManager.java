@@ -206,13 +206,12 @@ public class SurfaceManager {
     }
 
     public void drawPolyLines(Map<Integer, List<Punto2D>> curvesInfo, double afinador) {
+        Random generator = new Random();
 
+        Color c = Color.rgb(generator.nextInt(255), generator.nextInt(255), generator.nextInt(255));
         for (Map.Entry<Integer, List<Punto2D>> entry : curvesInfo.entrySet()) {
             Integer key = entry.getKey();
             List<Punto2D> value = entry.getValue();
-            Random generator = new Random();
-
-            Color c = Color.rgb(generator.nextInt(255), generator.nextInt(255), generator.nextInt(255));
 
             List<Point3D> pointsList = new ArrayList<>();
             for (int i = 0; i < value.size(); i++) {
@@ -220,7 +219,7 @@ public class SurfaceManager {
                 Point3D p = new Point3D((float) punto2D.getX_Point(), 0, (float) punto2D.getY_Point());
                 pointsList.add(p);
             }
-            PolyLine3D line = new PolyLine3D(pointsList, 1 / 2, c);
+            PolyLine3D line = new PolyLine3D(pointsList, 1, c);
             plot.getChildren().add(line);
 
         }
@@ -251,7 +250,7 @@ public class SurfaceManager {
 
     public void drawShape(List<Punto2D> points, double afinador, double amplificador) {
         Random generator = new Random();
-        Color c = Color.rgb(generator.nextInt(255), generator.nextInt(255), generator.nextInt(255));
+        /*Color c = Color.rgb(generator.nextInt(255), generator.nextInt(255), generator.nextInt(255));
         for (int i = 0; i < points.size(); i++) {
 
             Punto2D punto2D = points.get(i);
@@ -265,7 +264,19 @@ public class SurfaceManager {
             //sp.setTranslateZ(punto2D.getY_Point() / 10);
             //}
             plot.getChildren().add(sp);
+        }*/
+        Color c = Color.rgb(generator.nextInt(255), generator.nextInt(255), generator.nextInt(255));
+
+        List<Point3D> pointsList = new ArrayList<>();
+        for (int i = 0; i < points.size(); i++) {
+            Punto2D punto2D = points.get(i);
+            Point3D p = new Point3D((float) ((punto2D.getX_Point() * amplificador) / afinador), 0,
+                    (float) ((punto2D.getY_Point() * amplificador * amplificador) / afinador));
+            pointsList.add(p);
         }
+        PolyLine3D line = new PolyLine3D(pointsList, 4, c);
+        plot.getChildren().add(line);
+
     }
 
     public void addDepth(List<Punto2D> points, double afinador, double amplificador) {
@@ -279,7 +290,7 @@ public class SurfaceManager {
 
                 Sphere sp = new Sphere(0.35);
                 sp.setMaterial(new PhongMaterial(c));
-                sp.setTranslateX(amplificador * punto2D.getX_Point());
+                sp.setTranslateX((amplificador * punto2D.getX_Point()) / afinador);
                 sp.setTranslateY(j + 1);
                 sp.setTranslateZ(amplificador * punto2D.getY_Point() / afinador);
 
@@ -295,9 +306,9 @@ public class SurfaceManager {
 
                 Sphere sp = new Sphere(0.35);
                 sp.setMaterial(new PhongMaterial(c));
-                sp.setTranslateX(amplificador * punto2D.getX_Point());
+                sp.setTranslateX((amplificador * punto2D.getX_Point())/afinador);
                 sp.setTranslateY(-1 * j - 1);
-                sp.setTranslateZ(amplificador * punto2D.getY_Point() / afinador);
+                sp.setTranslateZ((amplificador * punto2D.getY_Point()) / afinador);
 
                 plot.getChildren().add(sp);
             }
