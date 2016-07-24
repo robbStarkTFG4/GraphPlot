@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package testing3d.surfaces;
+package com.mim.graph.surfaces;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,9 +16,12 @@ import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
-import testing3d.util.PropertyWrapper;
-import testing3d.util.Punto2D;
-import testing3d.util.Surface;
+import com.mim.graph.util.PropertyWrapper;
+import com.mim.graph.util.Punto2D;
+import com.mim.graph.util.Surface;
+import java.util.ArrayList;
+import org.fxyz.geometry.Point3D;
+import org.fxyz.shapes.composites.PolyLine3D;
 
 /**
  *
@@ -202,7 +205,29 @@ public class SurfaceManager {
 
     }
 
+    public void drawPolyLines(Map<Integer, List<Punto2D>> curvesInfo, double afinador) {
+
+        for (Map.Entry<Integer, List<Punto2D>> entry : curvesInfo.entrySet()) {
+            Integer key = entry.getKey();
+            List<Punto2D> value = entry.getValue();
+            Random generator = new Random();
+
+            Color c = Color.rgb(generator.nextInt(255), generator.nextInt(255), generator.nextInt(255));
+
+            List<Point3D> pointsList = new ArrayList<>();
+            for (int i = 0; i < value.size(); i++) {
+                Punto2D punto2D = value.get(i);
+                Point3D p = new Point3D((float) punto2D.getX_Point(), 0, (float) punto2D.getY_Point());
+                pointsList.add(p);
+            }
+            PolyLine3D line = new PolyLine3D(pointsList, 1 / 2, c);
+            plot.getChildren().add(line);
+
+        }
+    }
+
     public void drawCurves(Map<Integer, List<Punto2D>> curvesInfo, double afinador) {
+
         for (Map.Entry<Integer, List<Punto2D>> entry : curvesInfo.entrySet()) {
             Integer key = entry.getKey();
             List<Punto2D> value = entry.getValue();
@@ -216,13 +241,11 @@ public class SurfaceManager {
                 Sphere sp = new Sphere(0.35);
                 sp.setMaterial(new PhongMaterial(c));
                 sp.setTranslateX(punto2D.getX_Point());
-                //if (punto2D.getY_Point() < 100) {
                 sp.setTranslateZ(punto2D.getY_Point() / afinador);
-                // } else {
-                //sp.setTranslateZ(punto2D.getY_Point() / 10);
-                //}
+
                 plot.getChildren().add(sp);
             }
+
         }
     }
 

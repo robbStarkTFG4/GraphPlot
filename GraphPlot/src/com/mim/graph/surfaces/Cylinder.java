@@ -3,37 +3,37 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package testing3d.surfaces;
+package com.mim.graph.surfaces;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
-import testing3d.util.Surface;
+import com.mim.graph.util.Surface;
 
 /**
  *
  * @author marcoisaac
  */
-public class Ellipsoid implements Surface {
+public class Cylinder implements Surface {
 
     private DoubleProperty aProperty;
     private DoubleProperty bProperty;
-    private DoubleProperty cProperty;
     private Group plot;
 
-    public Ellipsoid(Group plot, DoubleProperty aProperty, DoubleProperty bProperty, DoubleProperty cProperty) {
+    public Cylinder(Group plot, DoubleProperty aProperty, DoubleProperty bProperty) {
         this.aProperty = aProperty;
         this.bProperty = bProperty;
-        this.cProperty = cProperty;
         this.plot = plot;
     }
 
     @Override
     public void build() {
-        int radiusDivisions = 135;/// ESTE ES
+
+        int radiusDivisions = 20;/// ESTE ES
         int tubeDivisions = 12;//12
+
         int numVerts = (int) (tubeDivisions * radiusDivisions);
         int faceCount = numVerts * 2;
         float[] points = new float[numVerts * 3 * 4],
@@ -46,23 +46,19 @@ public class Ellipsoid implements Surface {
         int p0 = 0, p1 = 0, p2 = 0, p3 = 0, t0 = 0, t1 = 0, t2 = 0, t3 = 0;
         for (int tubeIndex = -tubeDivisions; tubeIndex < tubeDivisions; tubeIndex++) {
 
-            float radian = 1 * tubeIndex * 2.0f * 3.141592653589793f;
-
             for (int radiusIndex = -radiusDivisions; radiusIndex < radiusDivisions; radiusIndex++) {
 
-                /*x = acosusinv
-                y = bsinusinv
-                z = ccosv
-                u in [0,2pi) and v in [0,pi].
-                u = 0.2617x + 3.1403
-                
-                 */
+                /*x = acosu
+                y = bsinu
+                z = v
+ 
+                u in[0,2pi) and v in(0, h);*/
                 double v = radiusIndex * 0.0116 * radiusDivisions + 1.5683;
                 double u = 0.2617 * tubeIndex + 3.1403;
 
-                points[pointIndex + 0] = x = (float) (aProperty.getValue() * Math.cos(u) * Math.sin(v));
-                points[pointIndex + 1] = y = (float) (bProperty.getValue() * Math.sin(u) * Math.sin(v));
-                points[pointIndex + 2] = z = (float) (cProperty.getValue() * Math.cos(v));
+                points[pointIndex + 0] = x = (float) (aProperty.getValue() * Math.cos(u));
+                points[pointIndex + 1] = y = (float) (bProperty.getValue() * Math.sin(u));
+                points[pointIndex + 2] = z = radiusIndex;//radiusIndex
 
                 /*System.out.println("x: " + points[pointIndex + 0]);
                 System.out.println("y: " + points[pointIndex + 1]);
@@ -72,6 +68,8 @@ public class Ellipsoid implements Surface {
             }
 
         }
+
+        //plot = new Group();
         double amount = points.length / 3;
         //System.out.println("cantidad puntos: " + amount);
         for (int i = 0; i < points.length; i += 3) {
@@ -86,14 +84,5 @@ public class Ellipsoid implements Surface {
             plot.getChildren().add(sp);
 
         }
-        /*Sphere sp = new Sphere(5);
-        sp.setMaterial(new PhongMaterial(Color.BLUEVIOLET));
-        sp.setTranslateX(20);
-        sp.setTranslateY(0);
-        sp.setTranslateZ(20);
-        /*sp.setTranslateX(arrayX[x]);
-            sp.setTranslateY(arrayYN[x]);
-            sp.setTranslateZ(arrayZN[x]);*/
-        //plot.getChildren().add(sp);
     }
 }

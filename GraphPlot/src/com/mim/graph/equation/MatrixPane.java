@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package testing3d.equation;
+package com.mim.graph.equation;
 
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.layout.GridPane;
-import testing3d.util.PropertyWrapper;
+import com.mim.graph.util.PropertyWrapper;
 
 /**
  *

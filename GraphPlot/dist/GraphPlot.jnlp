@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="GraphPlot.jar" size="53862" download="eager" />
+    <jar href="GraphPlot.jar" size="54791" download="eager" />
     <jar href="lib\3DViewer.jar" size="1288494" download="eager" />
     <jar href="lib\FXyzLib.jar" size="14732482" download="eager" />
     <jar href="lib\exp4j-0.4.7-javadoc.jar" size="125599" download="eager" />
@@ -19,6 +19,6 @@
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="GraphPlot" >
     <param name="requiredFXVersion" value="8.0+"/>
   </applet-desc>
-  <jfx:javafx-desc  width="800" height="600" main-class="testing3d.Test3D"  name="GraphPlot" />
+  <jfx:javafx-desc  width="800" height="600" main-class="com.mim.graph.Main"  name="GraphPlot" />
   <update check="always"/>
 </jnlp>

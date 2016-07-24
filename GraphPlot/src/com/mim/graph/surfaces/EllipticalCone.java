@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package testing3d.surfaces;
+package com.mim.graph.surfaces;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
-import testing3d.util.Surface;
+import com.mim.graph.util.Surface;
 
 /**
  *

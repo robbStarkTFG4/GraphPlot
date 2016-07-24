@@ -1,4 +1,4 @@
-package testing3d.camera;
+package com.mim.graph.camera;
 
 import com.javafx.experiments.jfx3dviewer.AutoScalingGroup;
 import com.javafx.experiments.jfx3dviewer.Xform;

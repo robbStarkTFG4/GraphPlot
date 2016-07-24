@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package testing3d.equation;
+package com.mim.graph.equation;
 
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -20,7 +20,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import testing3d.util.PropertyWrapper;
+import com.mim.graph.util.PropertyWrapper;
 
 /**
  *

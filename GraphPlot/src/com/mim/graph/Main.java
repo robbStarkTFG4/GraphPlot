@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package testing3d;
+package com.mim.graph;
 
-import testing3d.util.CurvaDatos;
-import testing3d.util.Punto2D;
+import com.mim.graph.util.CurvaDatos;
+import com.mim.graph.util.Punto2D;
 import de.jensd.fx.glyphs.GlyphsDude;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import java.util.ArrayList;
@@ -47,11 +47,11 @@ import javafx.stage.Stage;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 import org.fxyz.shapes.composites.SurfacePlot;
-import testing3d.camera.ContentModel;
-import testing3d.util.HiddenPane;
-import testing3d.equation.MatrixPane;
-import testing3d.surfaces.SurfaceManager;
-import testing3d.equation.TextMatrix;
+import com.mim.graph.camera.ContentModel;
+import com.mim.graph.util.HiddenPane;
+import com.mim.graph.equation.MatrixPane;
+import com.mim.graph.surfaces.SurfaceManager;
+import com.mim.graph.equation.TextMatrix;
 
 /**
  *
@@ -99,7 +99,7 @@ import testing3d.equation.TextMatrix;
  *
  * 0% — 00
  */
-public class Test3D extends Application {
+public class Main extends Application {
 
     private SurfacePlot surfacePlot;
     public AmbientLight selfLight = new AmbientLight(Color.WHITE);
@@ -1251,12 +1251,21 @@ public class Test3D extends Application {
         curvaInf.setTipo("circle");
         curvaInf.setEcuacion(cExpr);
 
-        drawCircleCurvesPoints(Double.parseDouble(afinField.getText()));
+        drawCircleCurvesPoints(Double.parseDouble(afinField.getText()),1);
 
     }
 
-    private void drawCircleCurvesPoints(double parseDouble) {
-        surf.drawCurves(curvesInfo, parseDouble);
+    private void drawCircleCurvesPoints(double parseDouble,int pos) {
+        switch(pos){
+            case 1://curves
+                  surf.drawCurves(curvesInfo, parseDouble);
+                break;
+            case 2://polyLines
+                surf.drawPolyLines(curvesInfo, parseDouble);
+                break;
+                
+        }
+       
     }
 
     private void ellipseNivelCircleProccessInfo(TextField cMin, TextField cMax, Stage dialog, TextField afinField, double h, double k, String aRadius, String bRadius) {
@@ -1321,7 +1330,7 @@ public class Test3D extends Application {
         curvaInf = new CurvaDatos(Integer.parseInt(cMin.getText()), Integer.parseInt(cMax.getText()), Double.parseDouble(afinField.getText()), h, k, aRadius, bRadius);
         curvaInf.setTipo("ellip");
 
-        drawCircleCurvesPoints(Double.parseDouble(afinField.getText()));
+        drawCircleCurvesPoints(Double.parseDouble(afinField.getText()),1);
 
     }
 
