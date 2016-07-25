@@ -248,35 +248,49 @@ public class SurfaceManager {
         }
     }
 
-    public void drawShape(List<Punto2D> points, double afinador, double amplificador) {
+    public void drawShape(List<Punto2D> points, double afinador, double amplificador, String tipo, String render) {
         Random generator = new Random();
-        /*Color c = Color.rgb(generator.nextInt(255), generator.nextInt(255), generator.nextInt(255));
-        for (int i = 0; i < points.size(); i++) {
-
-            Punto2D punto2D = points.get(i);
-
-            Sphere sp = new Sphere(0.35);
-            sp.setMaterial(new PhongMaterial(c));
-            sp.setTranslateX(amplificador * punto2D.getX_Point());
-            //if (punto2D.getY_Point() < 100) {
-            sp.setTranslateZ(amplificador * punto2D.getY_Point() / afinador);
-            // } else {
-            //sp.setTranslateZ(punto2D.getY_Point() / 10);
-            //}
-            plot.getChildren().add(sp);
-        }*/
         Color c = Color.rgb(generator.nextInt(255), generator.nextInt(255), generator.nextInt(255));
+        switch (render) {
+            case "puntos":
 
-        List<Point3D> pointsList = new ArrayList<>();
-        for (int i = 0; i < points.size(); i++) {
-            Punto2D punto2D = points.get(i);
-            Point3D p = new Point3D((float) ((punto2D.getX_Point() * amplificador) / afinador), 0,
-                    (float) ((punto2D.getY_Point() * amplificador * amplificador) / afinador));
-            pointsList.add(p);
+                for (int i = 0; i < points.size(); i++) {
+
+                    Punto2D punto2D = points.get(i);
+
+                    Sphere sp = new Sphere(0.35);
+                    sp.setMaterial(new PhongMaterial(c));
+                    sp.setTranslateX(amplificador * punto2D.getX_Point());
+                    //if (punto2D.getY_Point() < 100) {
+                    sp.setTranslateZ(amplificador * punto2D.getY_Point() / afinador);
+                    // } else {
+                    //sp.setTranslateZ(punto2D.getY_Point() / 10);
+                    //}
+                    plot.getChildren().add(sp);
+                }
+                break;
+            case "linea":
+
+                List<Point3D> pointsList = new ArrayList<>();
+                for (int i = 0; i < points.size(); i++) {
+                    Punto2D punto2D = points.get(i);
+                    Point3D p = new Point3D((float) ((punto2D.getX_Point() * amplificador) / afinador), 0,
+                            (float) ((punto2D.getY_Point() * amplificador) / afinador));
+                    pointsList.add(p);
+                }
+                PolyLine3D line = null;
+                switch (tipo) {
+                    case "circulo":
+                        line = new PolyLine3D(pointsList, 1, c);
+                        break;
+                    case "otro":
+                        line = new PolyLine3D(pointsList, 4, c);
+                        break;
+                }
+
+                plot.getChildren().add(line);
+                break;
         }
-        PolyLine3D line = new PolyLine3D(pointsList, 4, c);
-        plot.getChildren().add(line);
-
     }
 
     public void addDepth(List<Punto2D> points, double afinador, double amplificador) {
@@ -306,7 +320,7 @@ public class SurfaceManager {
 
                 Sphere sp = new Sphere(0.35);
                 sp.setMaterial(new PhongMaterial(c));
-                sp.setTranslateX((amplificador * punto2D.getX_Point())/afinador);
+                sp.setTranslateX((amplificador * punto2D.getX_Point()) / afinador);
                 sp.setTranslateY(-1 * j - 1);
                 sp.setTranslateZ((amplificador * punto2D.getY_Point()) / afinador);
 

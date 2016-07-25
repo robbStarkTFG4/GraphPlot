@@ -54,7 +54,14 @@ import com.mim.graph.surfaces.SurfaceManager;
 import com.mim.graph.equation.TextMatrix;
 import com.mim.graph.help.CommandWindown;
 import javafx.event.EventHandler;
+import javafx.scene.control.CheckBox;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 
 /**
  *
@@ -325,8 +332,9 @@ public class Main extends Application {
         cilindricasBtn.setOnMouseClicked(w -> {
             cilindricasWindown();
         });
-
-        Button helpBtn = new Button("help");
+        Image img = new Image(Main.class.getResourceAsStream("help.png"));
+        Button helpBtn = new Button();
+        helpBtn.setBackground(new Background(new BackgroundImage(img, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
         helpBtn.setPadding(new Insets(7));
         helpBtn.setOnMouseClicked(f -> {
             CommandWindown cmd = new CommandWindown();
@@ -429,6 +437,7 @@ public class Main extends Application {
                 }
                 if (i == 1 && j == 1) {
                     hEllipTxt = new TextField("25");
+
                     hEllipTxt.setStyle("-fx-font-size:15");
                     hEllipTxt.setTranslateY(9);
                     hEllipTxt.setPrefHeight(5);
@@ -649,6 +658,9 @@ public class Main extends Application {
         TextField ampField = new TextField("1");
         afinHolder.getChildren().addAll(new Text("amplificador"), ampField);
 
+        CheckBox render = new CheckBox("linea");
+        afinHolder.getChildren().add(render);
+
         if (curvaInf2 == null) {
             curvaInf2 = new CurvaDatos();
         } else {
@@ -665,8 +677,14 @@ public class Main extends Application {
         Button procesar = new Button("PROCESAR");
         procesar.setPadding(new Insets(7));
         procesar.setOnMouseClicked(a -> {
-            //private void ellipseNivelCircleCuadriProccessInfo(TextField afinField, double h, double k, double a, double b, TextField ampField) {
-            ellipseNivelCircleCuadriProccessInfo(afinField, Double.parseDouble(hEllipTxtCuadri.getText()), Double.parseDouble(kEllipTxtCuadri.getText()), Double.parseDouble(aRadiusTxtCuadri.getText()), Double.parseDouble(bRadiusTxtCuadri.getText()), ampField);
+            String renderType = null;
+            if (render.isSelected()) {
+                renderType = "linea";
+            } else {
+                renderType = "puntos";
+            }
+
+            ellipseNivelCircleCuadriProccessInfo(afinField, Double.parseDouble(hEllipTxtCuadri.getText()), Double.parseDouble(kEllipTxtCuadri.getText()), Double.parseDouble(aRadiusTxtCuadri.getText()), Double.parseDouble(bRadiusTxtCuadri.getText()), ampField, renderType);
             giveDepth(Double.parseDouble(afinField.getText()), Double.parseDouble(ampField.getText()));
         });
 
@@ -868,6 +886,9 @@ public class Main extends Application {
         TextField afinField = new TextField("1");
         afinHolder.getChildren().addAll(afinLabel, afinField);
 
+        CheckBox render = new CheckBox("linea");
+        afinHolder.getChildren().add(render);
+
         if (curvaInf == null) {
             curvaInf = new CurvaDatos();
         } else {
@@ -883,7 +904,14 @@ public class Main extends Application {
         Button procesar = new Button("PROCESAR");
         procesar.setPadding(new Insets(7));
         procesar.setOnMouseClicked(a -> {
-            curvasNivelCircleProccessInfo(cMin, cMax, dialog, afinField, txtRadio.getText(), Double.parseDouble(hTxt.getText()), Double.parseDouble(kTxt.getText()));
+            String renderType = null;
+            if (render.isSelected()) {
+                renderType = "linea";
+            } else {
+                renderType = "puntos";
+            }
+            curvasNivelCircleProccessInfo(cMin, cMax, dialog, afinField, txtRadio.getText(), Double.parseDouble(hTxt.getText()),
+                    Double.parseDouble(kTxt.getText()));
         });
 
         VBox contentCircle = new VBox();
@@ -977,6 +1005,9 @@ public class Main extends Application {
         TextField ampField = new TextField("1");
         ampHolder.getChildren().add(ampField);
 
+        CheckBox render = new CheckBox("linea");
+        ampHolder.getChildren().add(render);
+
         if (curvaInf2 != null) {
             xMin.setText(String.valueOf(curvaInf2.getxMin()));
             xMax.setText(String.valueOf(curvaInf2.getxMax()));
@@ -989,7 +1020,14 @@ public class Main extends Application {
         Button procesar = new Button("PROCESAR");
         procesar.setPadding(new Insets(7));
         procesar.setOnMouseClicked(a -> {
-            otroCilindricasProccessInfo(xMin, xMax, dialog, equationField, afinField, ampField);
+            String renderType = null;
+            if (render.isSelected()) {
+                renderType = "linea";
+            } else {
+                renderType = "puntos";
+            }
+
+            otroCilindricasProccessInfo(xMin, xMax, dialog, equationField, afinField, ampField, renderType);
             giveDepth(Double.parseDouble(afinField.getText()), Double.parseDouble(ampField.getText()));
             /* if (comboBox.getSelectionModel().getSelectedItem() != null) {
                 System.out.println("dar altura");
@@ -1418,7 +1456,7 @@ public class Main extends Application {
         dialog.showAndWait();
     }
 
-    private void otroCilindricasProccessInfo(TextField xMin, TextField xMax, Stage dialog, TextField equationField, TextField afinField, TextField ampField) {
+    private void otroCilindricasProccessInfo(TextField xMin, TextField xMax, Stage dialog, TextField equationField, TextField afinField, TextField ampField, String render) {
         //curvesInfo2 = new HashMap<>();
         int minX = Integer.parseInt(xMin.getText());
         int maxX = Integer.parseInt(xMax.getText());
@@ -1459,13 +1497,13 @@ public class Main extends Application {
             curvaInf2.setTipo("otro");
             curvaInf2.setAmplificador(Double.parseDouble(ampField.getText()));
 
-            drawShape(Double.parseDouble(afinField.getText()), Double.parseDouble(ampField.getText()));
+            drawShape(Double.parseDouble(afinField.getText()), Double.parseDouble(ampField.getText()), "otro", render);
         }
 
     }
 
-    private void drawShape(double afinador, double amplificador) {
-        surf.drawShape(pointsCilindricas, afinador, amplificador);
+    private void drawShape(double afinador, double amplificador, String tipo, String render) {
+        surf.drawShape(pointsCilindricas, afinador, amplificador, tipo, render);
     }
 
     private void giveDepth(double afinador, double amplificador) {
@@ -1473,7 +1511,7 @@ public class Main extends Application {
     }
 //ellipseNivelCircleCuadriProccessInfo(afinField, Double.parseDouble(hEllipTxtCuadri.getText()), Double.parseDouble(kEllipTxt.getText()), aRadiusTxt.getText(), bRadiusTxt.getText(),ampField);
 
-    private void ellipseNivelCircleCuadriProccessInfo(TextField afinField, double h, double k, double a, double b, TextField ampField) {
+    private void ellipseNivelCircleCuadriProccessInfo(TextField afinField, double h, double k, double a, double b, TextField ampField, String render) {
 
         int radiusDivisions = 30;/// ESTE ES 20
         int tubeDivisions = 12;//12
@@ -1510,12 +1548,12 @@ public class Main extends Application {
             equationPane.setVisible(false);
         }
         curvaInf2 = new CurvaDatos(h, k, Math.sqrt(a), Math.sqrt(b));
-        curvaInf2.setaRadius(aRadiusTxt.getText());
-        curvaInf2.setbRadius(bRadiusTxt.getText());
+        curvaInf2.setaRadius(aRadiusTxtCuadri.getText());
+        curvaInf2.setbRadius(bRadiusTxtCuadri.getText());
         curvaInf2.setAmplificador(Double.parseDouble(ampField.getText()));
         curvaInf2.setTipo("ellip");
 
-        drawShape(Double.parseDouble(afinField.getText()), Double.parseDouble(ampField.getText()));
+        drawShape(Double.parseDouble(afinField.getText()), Double.parseDouble(ampField.getText()), "circulo", render);
     }
 
 }
