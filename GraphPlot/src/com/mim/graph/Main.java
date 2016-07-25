@@ -53,6 +53,7 @@ import com.mim.graph.equation.MatrixPane;
 import com.mim.graph.surfaces.SurfaceManager;
 import com.mim.graph.equation.TextMatrix;
 import com.mim.graph.help.CommandWindown;
+import javafx.application.Platform;
 import javafx.scene.control.CheckBox;
 
 /**
@@ -963,32 +964,32 @@ public class Main extends Application {
         Text topLabel = new Text("Escribe ecuacion con la forma: ");
         Text formExampleLabel = new Text("F(Y) = X + C");
 
-        TextField equationField = new TextField();
+        final TextField equationField = new TextField();
         equationField.setFocusTraversable(false);
         equationField.setPromptText("escribe ecuacion aqui....");
 
         HBox xHolder = new HBox();
-        TextField xMin = new TextField("-50");
+        final TextField xMin = new TextField("-50");
 
         Text xRangeLabel = new Text("  <=  X  >=  ");
         xRangeLabel.setFont(new Font(15));
 
-        TextField xMax = new TextField("50");
+        final TextField xMax = new TextField("50");
         xHolder.getChildren().addAll(xMin, xRangeLabel, xMax);
 
         HBox cHolder = new HBox();
-        TextField cMin = new TextField("-10");
+        final TextField cMin = new TextField("-10");
 
         Text cRangeLabel = new Text("  <=  C  >=  ");
         cRangeLabel.setFont(new Font(15));
 
-        TextField cMax = new TextField("10");
+        final TextField cMax = new TextField("10");
         cHolder.getChildren().addAll(cMin, cRangeLabel, cMax);
 
         HBox afinHolder = new HBox();
         afinHolder.setSpacing(7);
         Text afinLabel = new Text("Afinador");
-        TextField afinField = new TextField("100");
+        final TextField afinField = new TextField("100");
         afinHolder.getChildren().addAll(afinLabel, afinField);
 
         CheckBox render = new CheckBox("linea");
@@ -997,7 +998,7 @@ public class Main extends Application {
         HBox spaceHolder = new HBox();
         spaceHolder.setSpacing(7);
         Text spaceLabel = new Text("espacio");
-        TextField spaceField = new TextField("0");
+        final TextField spaceField = new TextField("0");
         spaceHolder.getChildren().addAll(spaceLabel, spaceField);
 
         if (curvaInf != null) {
@@ -1013,13 +1014,32 @@ public class Main extends Application {
         //procesarCurvaNivelOtro = new Button("PROCESAR");
         procesarCurvaNivelOtro.setPadding(new Insets(7));
         procesarCurvaNivelOtro.setOnMouseClicked(a -> {
+            String minX = xMin.getText();
+            String maxX = xMax.getText();
+            String minC = cMin.getText();
+            String maxC = cMax.getText();
+            String equation = equationField.getText();
+            String afin = afinField.getText();
+            String space = spaceField.getText();
+
             String renderType = null;
             if (render.isSelected()) {
                 renderType = "linea";
             } else {
                 renderType = "puntos";
             }
-            curvasNivelProccessInfo(xMin, xMax, cMin, cMax, dialog, equationField, afinField, renderType, Integer.parseInt(spaceField.getText()));
+
+            String tipo = renderType;
+
+            new Thread() {
+                @Override
+                public void run() {
+                    System.out.println("hilo ejecutado");
+                    System.out.println(equation);
+                    curvasNivelProccessInfo(minX, maxX, minC, maxC, equation, afin, tipo, Integer.parseInt(space));
+                }
+
+            }.start();
         });
 
         VBox mainContent = new VBox();
@@ -1097,15 +1117,15 @@ public class Main extends Application {
         return mainContent;
     }
 
-    private void curvasNivelProccessInfo(TextField xMin, TextField xMax, TextField cMin, TextField cMax, Stage dialog, TextField equationField, TextField afinField, String render, int space) throws NumberFormatException {
+    private void curvasNivelProccessInfo(String xMin, String xMax, String cMin, String cMax, String equationField, String afinField, String render, int space) throws NumberFormatException {
         curvesInfo = new HashMap<>();
-        int minX = Integer.parseInt(xMin.getText());
-        int maxX = Integer.parseInt(xMax.getText());
+        int minX = Integer.parseInt(xMin);
+        int maxX = Integer.parseInt(xMax);
 
-        int minC = Integer.parseInt(cMin.getText());
-        int maxC = Integer.parseInt(cMax.getText());
+        int minC = Integer.parseInt(cMin);
+        int maxC = Integer.parseInt(cMax);
 
-        String equation = equationField.getText();
+        String equation = equationField;
         if (equation != null && equation.length() > 0) {
             for (int i = minC; i <= maxC; i++) {
                 List<Punto2D> points = new ArrayList<>();
@@ -1140,19 +1160,28 @@ public class Main extends Application {
                     System.out.println("una lista no se guardo");
                 }
             }
-            surf.destroySurface();
-            if (equationPane.isVisible()) {
-                equationPane.setVisible(false);
-            }
-            curvaInf = new CurvaDatos(equationField.getText(), Integer.parseInt(xMin.getText()), Integer.parseInt(xMax.getText()),
-                    Integer.parseInt(cMin.getText()), Integer.parseInt(cMax.getText()), Double.parseDouble(afinField.getText()));
-            curvaInf.setTipo("otro");
 
-            if (render.equals("linea")) {
-                drawPoints(Double.parseDouble(afinField.getText()), 2, space);
-            } else {
-                drawPoints(Double.parseDouble(afinField.getText()), 1, space);
-            }
+            curvaInf = new CurvaDatos(equationField, Integer.parseInt(xMin), Integer.parseInt(xMax),
+                    Integer.parseInt(cMin), Integer.parseInt(cMax), Double.parseDouble(afinField));
+            curvaInf.setTipo("otro");
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println("hacer cambios en interfaz");
+                    surf.destroySurface();
+                    if (equationPane.isVisible()) {
+                        equationPane.setVisible(false);
+                    }
+                    if (render.equals("linea")) {
+                        drawPoints(Double.parseDouble(afinField), 2, space);
+                    } else {
+                        drawPoints(Double.parseDouble(afinField), 1, space);
+                    }
+                }
+            });
+
+        } else {
+            System.out.println("not generate points");
         }
 
     }
