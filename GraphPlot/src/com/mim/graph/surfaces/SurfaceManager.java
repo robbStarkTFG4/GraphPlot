@@ -208,11 +208,10 @@ public class SurfaceManager {
     public void drawPolyLines(Map<Integer, List<Punto2D>> curvesInfo, double afinador) {
         Random generator = new Random();
 
-        Color c = Color.rgb(generator.nextInt(255), generator.nextInt(255), generator.nextInt(255));
         for (Map.Entry<Integer, List<Punto2D>> entry : curvesInfo.entrySet()) {
             Integer key = entry.getKey();
             List<Punto2D> value = entry.getValue();
-
+            Color c = Color.rgb(generator.nextInt(255), generator.nextInt(255), generator.nextInt(255));
             List<Point3D> pointsList = new ArrayList<>();
             for (int i = 0; i < value.size(); i++) {
                 Punto2D punto2D = value.get(i);
