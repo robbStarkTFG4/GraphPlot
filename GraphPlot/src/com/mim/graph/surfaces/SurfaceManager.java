@@ -205,22 +205,26 @@ public class SurfaceManager {
 
     }
 
-    public void drawPolyLines(Map<Integer, List<Punto2D>> curvesInfo, double afinador) {
+    public void drawPolyLines(Map<Integer, List<Punto2D>> curvesInfo, double afinador,int space) {
         Random generator = new Random();
-
+        int count = 0;
         for (Map.Entry<Integer, List<Punto2D>> entry : curvesInfo.entrySet()) {
             Integer key = entry.getKey();
             List<Punto2D> value = entry.getValue();
-            Color c = Color.rgb(generator.nextInt(255), generator.nextInt(255), generator.nextInt(255));
-            List<Point3D> pointsList = new ArrayList<>();
-            for (int i = 0; i < value.size(); i++) {
-                Punto2D punto2D = value.get(i);
-                Point3D p = new Point3D((float) (punto2D.getX_Point() ), 0, (float) (punto2D.getY_Point() / afinador));
-                pointsList.add(p);
+            if (count >= space) {
+                Color c = Color.rgb(generator.nextInt(255), generator.nextInt(255), generator.nextInt(255));
+                List<Point3D> pointsList = new ArrayList<>();
+                for (int i = 0; i < value.size(); i++) {
+                    Punto2D punto2D = value.get(i);
+                    Point3D p = new Point3D((float) (punto2D.getX_Point()), 0, (float) (punto2D.getY_Point() / afinador));
+                    pointsList.add(p);
+                }
+                PolyLine3D line = new PolyLine3D(pointsList, 1, c);
+                plot.getChildren().add(line);
+                count = 0;
+            } else {
+                count = count + 1;
             }
-            PolyLine3D line = new PolyLine3D(pointsList, 1, c);
-            plot.getChildren().add(line);
-
         }
     }
 

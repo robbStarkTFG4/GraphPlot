@@ -531,6 +531,12 @@ public class Main extends Application {
 
         CheckBox render = new CheckBox("linea");
         afinHolder.getChildren().add(render);
+        
+        HBox spaceHolder=new HBox();
+        spaceHolder.setSpacing(7);
+        Text spaceLabel = new Text("espacio");
+        TextField spaceField = new TextField("0");
+        spaceHolder.getChildren().addAll(spaceLabel, spaceField);
 
         if (curvaInf == null) {
             curvaInf = new CurvaDatos();
@@ -555,13 +561,14 @@ public class Main extends Application {
             } else {
                 renderType = "puntos";
             }
-            ellipseNivelCircleProccessInfo(cMin, cMax, dialog, afinField, Double.parseDouble(hEllipTxt.getText()), Double.parseDouble(kEllipTxt.getText()), aRadiusTxt.getText(), bRadiusTxt.getText(), renderType);
+            ellipseNivelCircleProccessInfo(cMin, cMax, dialog, afinField, Double.parseDouble(hEllipTxt.getText())
+                    , Double.parseDouble(kEllipTxt.getText()), aRadiusTxt.getText(), bRadiusTxt.getText(), renderType,Integer.parseInt(spaceField.getText()));
         });
 
         VBox contentCircle = new VBox();
         contentCircle.setPadding(new Insets(10));
         contentCircle.setSpacing(7);
-        contentCircle.getChildren().addAll(matrix, cHolder, procesar, afinHolder);
+        contentCircle.getChildren().addAll(matrix, cHolder, procesar, afinHolder,spaceHolder);
         return contentCircle;
     }
 
@@ -790,6 +797,12 @@ public class Main extends Application {
 
         CheckBox render = new CheckBox("linea");
         afinHolder.getChildren().add(render);
+        
+        HBox spaceHolder=new HBox();
+        spaceHolder.setSpacing(7);
+        Text spaceLabel = new Text("espacio");
+        TextField spaceField = new TextField("0");
+        spaceHolder.getChildren().addAll(spaceLabel, spaceField);
 
         if (curvaInf == null) {
             curvaInf = new CurvaDatos();
@@ -812,13 +825,14 @@ public class Main extends Application {
             } else {
                 renderType = "puntos";
             }
-            curvasNivelCircleProccessInfo(cMin, cMax, dialog, afinField, txtRadio.getText(), Double.parseDouble(hTxt.getText()), Double.parseDouble(kTxt.getText()), renderType);
+            curvasNivelCircleProccessInfo(cMin, cMax, dialog, afinField, txtRadio.getText(), Double.parseDouble(hTxt.getText())
+                    , Double.parseDouble(kTxt.getText()), renderType,Integer.parseInt(spaceField.getText()));
         });
 
         VBox contentCircle = new VBox();
         contentCircle.setPadding(new Insets(10));
         contentCircle.setSpacing(7);
-        contentCircle.getChildren().addAll(matrix, cHolder, procesar, afinHolder);
+        contentCircle.getChildren().addAll(matrix, cHolder, procesar, afinHolder,spaceHolder);
         return contentCircle;
     }
 
@@ -907,6 +921,12 @@ public class Main extends Application {
 
         CheckBox render = new CheckBox("linea");
         afinHolder.getChildren().add(render);
+        
+        HBox spaceHolder=new HBox();
+        spaceHolder.setSpacing(7);
+        Text spaceLabel = new Text("espacio");
+        TextField spaceField = new TextField("0");
+        spaceHolder.getChildren().addAll(spaceLabel, spaceField);
 
         if (curvaInf == null) {
             curvaInf = new CurvaDatos();
@@ -930,13 +950,13 @@ public class Main extends Application {
                 renderType = "puntos";
             }
             curvasNivelCircleProccessInfo(cMin, cMax, dialog, afinField, txtRadio.getText(), Double.parseDouble(hTxt.getText()),
-                    Double.parseDouble(kTxt.getText()), renderType);
+                    Double.parseDouble(kTxt.getText()), renderType,Integer.parseInt(spaceField.getText()));
         });
 
         VBox contentCircle = new VBox();
         contentCircle.setPadding(new Insets(10));
         contentCircle.setSpacing(7);
-        contentCircle.getChildren().addAll(matrix, cHolder, procesar, afinHolder);
+        contentCircle.getChildren().addAll(matrix, cHolder, procesar, afinHolder,spaceHolder);
         return contentCircle;
     }
 
@@ -974,6 +994,13 @@ public class Main extends Application {
 
         CheckBox render = new CheckBox("linea");
         afinHolder.getChildren().add(render);
+        
+        HBox spaceHolder=new HBox();
+        spaceHolder.setSpacing(7);
+        Text spaceLabel = new Text("espacio");
+        TextField spaceField = new TextField("0");
+        spaceHolder.getChildren().addAll(spaceLabel, spaceField);
+        
 
         if (curvaInf != null) {
             xMin.setText(String.valueOf(curvaInf.getxMin()));
@@ -994,12 +1021,12 @@ public class Main extends Application {
             } else {
                 renderType = "puntos";
             }
-            curvasNivelProccessInfo(xMin, xMax, cMin, cMax, dialog, equationField, afinField, renderType);
+            curvasNivelProccessInfo(xMin, xMax, cMin, cMax, dialog, equationField, afinField, renderType,Integer.parseInt(spaceField.getText()));
         });
 
         VBox mainContent = new VBox();
         mainContent.setSpacing(7);
-        mainContent.getChildren().addAll(topLabel, formExampleLabel, equationField, xHolder, cHolder, procesar, afinHolder);
+        mainContent.getChildren().addAll(topLabel, formExampleLabel, equationField, xHolder, cHolder, procesar, afinHolder,spaceHolder);
         return mainContent;
     }
 
@@ -1072,7 +1099,8 @@ public class Main extends Application {
         return mainContent;
     }
 
-    private void curvasNivelProccessInfo(TextField xMin, TextField xMax, TextField cMin, TextField cMax, Stage dialog, TextField equationField, TextField afinField, String render) throws NumberFormatException {
+    private void curvasNivelProccessInfo(TextField xMin, TextField xMax, TextField cMin, TextField cMax, Stage dialog, TextField equationField
+            , TextField afinField, String render,int space) throws NumberFormatException {
         curvesInfo = new HashMap<>();
         int minX = Integer.parseInt(xMin.getText());
         int maxX = Integer.parseInt(xMax.getText());
@@ -1124,9 +1152,9 @@ public class Main extends Application {
             curvaInf.setTipo("otro");
 
             if (render.equals("linea")) {
-                drawPoints(Double.parseDouble(afinField.getText()), 2);
+                drawPoints(Double.parseDouble(afinField.getText()), 2,space);
             } else {
-                drawPoints(Double.parseDouble(afinField.getText()), 1);
+                drawPoints(Double.parseDouble(afinField.getText()), 1,space);
             }
         }
 
@@ -1271,7 +1299,8 @@ public class Main extends Application {
         title.set("GraphPlot " + string);
     }
 
-    private void curvasNivelCircleProccessInfo(TextField cMin, TextField cMax, Stage dialog, TextField afinField, String cExpr, double h, double k, String render) {
+    private void curvasNivelCircleProccessInfo(TextField cMin, TextField cMax, Stage dialog, TextField afinField, String cExpr, double h
+            , double k, String render,int space) {
         curvesInfo = new HashMap<>();
 
         int minC = Integer.parseInt(cMin.getText());
@@ -1327,27 +1356,28 @@ public class Main extends Application {
         curvaInf.setTipo("circle");
         curvaInf.setEcuacion(cExpr);
         if (render.equals("linea")) {
-            drawPoints(Double.parseDouble(afinField.getText()), 2);
+            drawPoints(Double.parseDouble(afinField.getText()), 2,space);
         } else {
-            drawPoints(Double.parseDouble(afinField.getText()), 1);
+            drawPoints(Double.parseDouble(afinField.getText()), 1,space);
         }
 
     }
 
-    private void drawPoints(double parseDouble, int pos) {
+    private void drawPoints(double parseDouble, int pos,int space) {
         switch (pos) {
             case 1://curves
                 surf.drawCurves(curvesInfo, parseDouble);
                 break;
             case 2://polyLines
-                surf.drawPolyLines(curvesInfo, parseDouble);
+                surf.drawPolyLines(curvesInfo, parseDouble,space);
                 break;
 
         }
 
     }
 
-    private void ellipseNivelCircleProccessInfo(TextField cMin, TextField cMax, Stage dialog, TextField afinField, double h, double k, String aRadius, String bRadius, String render) {
+    private void ellipseNivelCircleProccessInfo(TextField cMin, TextField cMax, Stage dialog, TextField afinField, double h, double k
+            , String aRadius, String bRadius, String render,int space) {
         curvesInfo = new HashMap<>();
 
         int minC = Integer.parseInt(cMin.getText());
@@ -1410,9 +1440,9 @@ public class Main extends Application {
         curvaInf.setTipo("ellip");
 
         if (render.equals("linea")) {
-            drawPoints(Double.parseDouble(afinField.getText()), 2);
+            drawPoints(Double.parseDouble(afinField.getText()), 2,space);
         } else {
-            drawPoints(Double.parseDouble(afinField.getText()), 1);
+            drawPoints(Double.parseDouble(afinField.getText()), 1,space);
         }
 
     }
