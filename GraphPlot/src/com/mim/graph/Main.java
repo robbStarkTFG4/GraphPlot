@@ -47,7 +47,7 @@ import javafx.stage.Stage;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 import org.fxyz.shapes.composites.SurfacePlot;
-import com.mim.graph.camera.ContentModel;
+import com.mim.graph.camera.Space3D;
 import com.mim.graph.util.HiddenPane;
 import com.mim.graph.equation.MatrixPane;
 import com.mim.graph.surfaces.SurfaceManager;
@@ -149,7 +149,7 @@ public class Main extends Application {
 
     private final StackPane mainPanel = new StackPane();
 
-    private ContentModel content;
+    private Space3D content;
     private final VBox root = new VBox();
 
     // here i add "plot" group
@@ -205,7 +205,7 @@ public class Main extends Application {
 
     //setUp 3D space and equation pane.
     private void spaceAxis(final double plotWidth, final double plotHeight) {
-        content = new ContentModel(plotWidth, plotHeight, 40);
+        content = new Space3D(plotWidth, plotHeight, 40);
         mainPanel.getChildren().add(content.getSubScene());
 
         double valX = plotWidth / 425;
@@ -332,9 +332,9 @@ public class Main extends Application {
         cilindricasBtn.setOnMouseClicked(w -> {
             cilindricasWindown();
         });
-        Image img = new Image(Main.class.getResourceAsStream("help.png"));
-        Button helpBtn = new Button();
-        helpBtn.setBackground(new Background(new BackgroundImage(img, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+        //Image img = new Image(Main.class.getResourceAsStream("help.png"));
+        Button helpBtn = new Button("?");
+        //helpBtn.setBackground(new Background(new BackgroundImage(img, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
         helpBtn.setPadding(new Insets(7));
         helpBtn.setOnMouseClicked(f -> {
             CommandWindown cmd = new CommandWindown();

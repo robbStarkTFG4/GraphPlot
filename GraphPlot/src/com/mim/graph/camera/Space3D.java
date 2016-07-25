@@ -17,14 +17,8 @@ import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 
-/**
- * 3D Content Model for Viewer App. Contains the 3D subscene and everything
- * related to it: light, cameras, axis Based on
- * com.javafx.experiments.jfx3dviewer.ContentModel
- *
- * @author jpereda, April 2014 - @JPeredaDnr
- */
-public class ContentModel {
+
+public class Space3D {
 
     private SubScene subScene;
     private final Group root3D = new Group();
@@ -45,7 +39,7 @@ public class ContentModel {
     private double mouseDeltaX, mouseDeltaY;
     private final double modifierFactor = 0.3;
 
-    public ContentModel(double paneW, double paneH, double dimModel) {
+    public Space3D(double paneW, double paneH, double dimModel) {
         this.paneW = paneW;
         this.paneH = paneH;
         this.dimModel = dimModel;
@@ -65,31 +59,7 @@ public class ContentModel {
         cameraXform2.getChildren().add(camera);
         cameraPosition.setZ(-2d * dimModel);
         root3D.getChildren().add(cameraXform);
-        /*
-        Rotate camera to show isometric view X right, Y top, Z 120º left-down from each
-        
-        Three ways: 
-        
-        One: Calculate vector and angle of rotation to combine two rotations:
-        
-        Qy[Pi/6].Qx[-Pi/6] (note angles for camera are opposite to model rotations)
-        
-        With some calculations:
-        (http://jperedadnr.blogspot.com.es/2013/06/leap-motion-controller-and-javafx-new.html) 
-        * camera.setRotationAxis(new Point3D(-0.694747,0.694747,0.186157));
-        * camera.setRotate(42.1812);
-        
-        Two: with rotation matrix, taking all the previous transformations, by appending all of
-        them in a single matrix before prepending these two rotations:
-        
-        * Affine affineCamIni=new Affine();    
-        * camera.getTransforms().stream().forEach(affineCamIni::append);
-        * affineCamIni.prepend(new Rotate(-30, Rotate.X_AXIS));
-        * affineCamIni.prepend(new Rotate(30, Rotate.Y_AXIS));
-        * camera.getTransforms().setAll(affineCamIni);
-        
-        Three: setting first RX rotation, then RY:        
-         */
+ 
         cameraXform.setRx(-30.0);
         cameraXform.setRy(30);
 
@@ -97,7 +67,6 @@ public class ContentModel {
 
     private void buildSubScene() {
         root3D.getChildren().add(autoScalingGroup);
-
         subScene = new SubScene(root3D, paneW, paneH, true, javafx.scene.SceneAntialiasing.BALANCED);
         subScene.setCamera(camera);
         subScene.setFill(Color.CADETBLUE);
@@ -174,7 +143,7 @@ public class ContentModel {
                 cameraXform.setRy(cameraXform.ry.getAngle() - yFlip * mouseDeltaX * modifierFactor * modifier * 2.0);
                 cameraXform.setRx(cameraXform.rx.getAngle() + xFlip * mouseDeltaY * modifierFactor * modifier * 2.0);
             } else if (event.isSecondaryButtonDown()) {
-                System.out.println("hola crayola");
+                //System.out.println("hola crayola");
                 double z = cameraPosition.getZ();
                 double newZ = z - xFlip * (mouseDeltaX + mouseDeltaY) * modifierFactor * modifier;
                 cameraPosition.setZ(newZ);

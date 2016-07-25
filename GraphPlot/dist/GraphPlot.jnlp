@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="GraphPlot.jar" size="60312" download="eager" />
+    <jar href="GraphPlot.jar" size="59838" download="eager" />
     <jar href="lib\3DViewer.jar" size="1288494" download="eager" />
     <jar href="lib\FXyzLib.jar" size="14732482" download="eager" />
     <jar href="lib\exp4j-0.4.7-javadoc.jar" size="125599" download="eager" />
