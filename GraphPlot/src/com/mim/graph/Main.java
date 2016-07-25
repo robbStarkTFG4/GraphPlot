@@ -54,7 +54,9 @@ import com.mim.graph.surfaces.SurfaceManager;
 import com.mim.graph.equation.TextMatrix;
 import com.mim.graph.help.CommandWindown;
 import javafx.application.Platform;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Dialog;
 
 /**
  *
@@ -172,7 +174,7 @@ public class Main extends Application {
     private TextField aRadiusTxtCuadri;
     private TextField kEllipTxtCuadri;
     private TextField bRadiusTxtCuadri;
-    private Stage dialogNivel;
+    //private Stage dialogNivel;
     private Stage dialogCilindricas;
 
     private final Button procesarCurvaNivelOtro = new Button("PROCESAR");
@@ -350,7 +352,8 @@ public class Main extends Application {
     }
 
     private void curvasNivelWindown() {
-        dialogNivel = new Stage();
+        //dialogNivel = new Stage();
+        Dialog dialogNivel = new Dialog<>();
         VBox rootCurvaNivel = new VBox();
         rootCurvaNivel.setPadding(new Insets(12));
         rootCurvaNivel.setSpacing(7);
@@ -382,14 +385,14 @@ public class Main extends Application {
 
                 switch (newValue.getUserData().toString()) {
                     case "other":
-                        rootCurvaNivel.getChildren().add(otroContent(dialogNivel));
+                        rootCurvaNivel.getChildren().add(otroContent());
                         break;
                     case "circle":
-                        rootCurvaNivel.getChildren().add(circleContent(dialogNivel));
+                        rootCurvaNivel.getChildren().add(circleContent());
                         break;
                     case "ellip":
                         ellipseBtn.setSelected(true);
-                        rootCurvaNivel.getChildren().add(ellipseContent(dialogNivel));
+                        rootCurvaNivel.getChildren().add(ellipseContent());
                         break;
                 }
             }
@@ -399,31 +402,38 @@ public class Main extends Application {
             switch (curvaInf.getTipo()) {
                 case "otro":
                     otroBtn.setSelected(true);
-                    rootCurvaNivel.getChildren().add(otroContent(dialogNivel));
+                    rootCurvaNivel.getChildren().add(otroContent());
                     break;
                 case "circle":
                     circuloBtn.setSelected(true);
-                    rootCurvaNivel.getChildren().add(circleContent(dialogNivel));
+                    rootCurvaNivel.getChildren().add(circleContent());
                     break;
                 case "ellip":
                     ellipseBtn.setSelected(true);
-                    rootCurvaNivel.getChildren().add(ellipseContent(dialogNivel));
+                    rootCurvaNivel.getChildren().add(ellipseContent());
                     break;
             }
         } else {
             otroBtn.setSelected(true);
-            rootCurvaNivel.getChildren().add(otroContent(dialogNivel));
+            rootCurvaNivel.getChildren().add(otroContent());
         }
-        dialogNivel.setScene(new Scene(rootCurvaNivel));
+        /*dialogNivel.setScene(new Scene(rootCurvaNivel));
         dialogNivel.setHeight(450);
         dialogNivel.setWidth(500);
         dialogNivel.setTitle("Escribe datos");
         dialogNivel.setResizable(false);
         dialogNivel.initOwner(stageRef);
+        dialogNivel.showAndWait();*/
+        dialogNivel.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+        Node closeButton = dialogNivel.getDialogPane().lookupButton(ButtonType.CLOSE);
+        closeButton.managedProperty().bind(closeButton.visibleProperty());
+        closeButton.setVisible(false);
+        dialogNivel.getDialogPane().setContent(rootCurvaNivel);
+        //dialogNivel.set
         dialogNivel.showAndWait();
     }
 
-    private VBox ellipseContent(Stage dialog) {
+    private VBox ellipseContent() {
         int ROWS = 3;
         int COLLUMNS = 12;
         Node[][] nodeArray = new Node[ROWS][COLLUMNS];
@@ -563,7 +573,7 @@ public class Main extends Application {
             } else {
                 renderType = "puntos";
             }
-            ellipseNivelCircleProccessInfo(cMin, cMax, dialog, afinField, Double.parseDouble(hEllipTxt.getText()), Double.parseDouble(kEllipTxt.getText()), aRadiusTxt.getText(), bRadiusTxt.getText(), renderType, Integer.parseInt(spaceField.getText()));
+            ellipseNivelCircleProccessInfo(cMin, cMax, afinField, Double.parseDouble(hEllipTxt.getText()), Double.parseDouble(kEllipTxt.getText()), aRadiusTxt.getText(), bRadiusTxt.getText(), renderType, Integer.parseInt(spaceField.getText()));
         });
 
         VBox contentCircle = new VBox();
@@ -713,7 +723,7 @@ public class Main extends Application {
         return contentCircle;
     }
 
-    private VBox circleContent(Stage dialog) {
+    private VBox circleContent() {
         int ROWS = 3;
         int COLLUMNS = 12;
         Node[][] nodeArray = new Node[ROWS][COLLUMNS];
@@ -826,7 +836,7 @@ public class Main extends Application {
             } else {
                 renderType = "puntos";
             }
-            curvasNivelCircleProccessInfo(cMin, cMax, dialog, afinField, txtRadio.getText(), Double.parseDouble(hTxt.getText()), Double.parseDouble(kTxt.getText()), renderType, Integer.parseInt(spaceField.getText()));
+            curvasNivelCircleProccessInfo(cMin, cMax, afinField, txtRadio.getText(), Double.parseDouble(hTxt.getText()), Double.parseDouble(kTxt.getText()), renderType, Integer.parseInt(spaceField.getText()));
         });
 
         VBox contentCircle = new VBox();
@@ -949,7 +959,7 @@ public class Main extends Application {
             } else {
                 renderType = "puntos";
             }
-            curvasNivelCircleProccessInfo(cMin, cMax, dialog, afinField, txtRadio.getText(), Double.parseDouble(hTxt.getText()),
+            curvasNivelCircleProccessInfo(cMin, cMax, afinField, txtRadio.getText(), Double.parseDouble(hTxt.getText()),
                     Double.parseDouble(kTxt.getText()), renderType, Integer.parseInt(spaceField.getText()));
         });
 
@@ -960,7 +970,7 @@ public class Main extends Application {
         return contentCircle;
     }
 
-    private VBox otroContent(Stage dialog) {
+    private VBox otroContent() {
         Text topLabel = new Text("Escribe ecuacion con la forma: ");
         Text formExampleLabel = new Text("F(Y) = X + C");
 
@@ -1325,7 +1335,7 @@ public class Main extends Application {
         title.set("GraphPlot " + string);
     }
 
-    private void curvasNivelCircleProccessInfo(TextField cMin, TextField cMax, Stage dialog, TextField afinField, String cExpr, double h, double k, String render, int space) {
+    private void curvasNivelCircleProccessInfo(TextField cMin, TextField cMax, TextField afinField, String cExpr, double h, double k, String render, int space) {
         curvesInfo = new HashMap<>();
 
         int minC = Integer.parseInt(cMin.getText());
@@ -1401,7 +1411,7 @@ public class Main extends Application {
 
     }
 
-    private void ellipseNivelCircleProccessInfo(TextField cMin, TextField cMax, Stage dialog, TextField afinField, double h, double k, String aRadius, String bRadius, String render, int space) {
+    private void ellipseNivelCircleProccessInfo(TextField cMin, TextField cMax, TextField afinField, double h, double k, String aRadius, String bRadius, String render, int space) {
         curvesInfo = new HashMap<>();
 
         int minC = Integer.parseInt(cMin.getText());
