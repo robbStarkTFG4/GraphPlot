@@ -179,6 +179,8 @@ public class Main extends Application {
     private TextField aRadiusTxtCuadri;
     private TextField kEllipTxtCuadri;
     private TextField bRadiusTxtCuadri;
+    private Stage dialogNivel;
+    private Stage dialogCilindricas;
 
     @Override
     public void start(Stage primaryStage) {
@@ -348,7 +350,7 @@ public class Main extends Application {
     }
 
     private void curvasNivelWindown() {
-        Stage dialog = new Stage();
+        dialogNivel = new Stage();
         VBox rootCurvaNivel = new VBox();
         rootCurvaNivel.setPadding(new Insets(12));
         rootCurvaNivel.setSpacing(7);
@@ -380,14 +382,14 @@ public class Main extends Application {
 
                 switch (newValue.getUserData().toString()) {
                     case "other":
-                        rootCurvaNivel.getChildren().add(otroContent(dialog));
+                        rootCurvaNivel.getChildren().add(otroContent(dialogNivel));
                         break;
                     case "circle":
-                        rootCurvaNivel.getChildren().add(circleContent(dialog));
+                        rootCurvaNivel.getChildren().add(circleContent(dialogNivel));
                         break;
                     case "ellip":
                         ellipseBtn.setSelected(true);
-                        rootCurvaNivel.getChildren().add(ellipseContent(dialog));
+                        rootCurvaNivel.getChildren().add(ellipseContent(dialogNivel));
                         break;
                 }
             }
@@ -397,28 +399,28 @@ public class Main extends Application {
             switch (curvaInf.getTipo()) {
                 case "otro":
                     otroBtn.setSelected(true);
-                    rootCurvaNivel.getChildren().add(otroContent(dialog));
+                    rootCurvaNivel.getChildren().add(otroContent(dialogNivel));
                     break;
                 case "circle":
                     circuloBtn.setSelected(true);
-                    rootCurvaNivel.getChildren().add(circleContent(dialog));
+                    rootCurvaNivel.getChildren().add(circleContent(dialogNivel));
                     break;
                 case "ellip":
                     ellipseBtn.setSelected(true);
-                    rootCurvaNivel.getChildren().add(ellipseContent(dialog));
+                    rootCurvaNivel.getChildren().add(ellipseContent(dialogNivel));
                     break;
             }
         } else {
             otroBtn.setSelected(true);
-            rootCurvaNivel.getChildren().add(otroContent(dialog));
+            rootCurvaNivel.getChildren().add(otroContent(dialogNivel));
         }
-        dialog.setScene(new Scene(rootCurvaNivel));
-        dialog.setHeight(450);
-        dialog.setWidth(500);
-        dialog.setTitle("Escribe datos");
-        dialog.setResizable(false);
-        dialog.initOwner(stageRef);
-        dialog.showAndWait();
+        dialogNivel.setScene(new Scene(rootCurvaNivel));
+        dialogNivel.setHeight(450);
+        dialogNivel.setWidth(500);
+        dialogNivel.setTitle("Escribe datos");
+        dialogNivel.setResizable(false);
+        dialogNivel.initOwner(stageRef);
+        dialogNivel.showAndWait();
     }
 
     private VBox ellipseContent(Stage dialog) {
@@ -1448,7 +1450,7 @@ public class Main extends Application {
     }
 
     private void cilindricasWindown() {
-        Stage dialog = new Stage();
+        dialogCilindricas = new Stage();
         VBox rootCurvaNivel = new VBox();
         rootCurvaNivel.setPadding(new Insets(12));
         rootCurvaNivel.setSpacing(7);
@@ -1479,14 +1481,14 @@ public class Main extends Application {
 
                 switch (newValue.getUserData().toString()) {
                     case "other":
-                        rootCurvaNivel.getChildren().add(otroContent2(dialog));
+                        rootCurvaNivel.getChildren().add(otroContent2(dialogCilindricas));
                         break;
                     case "circle":
-                        rootCurvaNivel.getChildren().add(circleContent2(dialog));
+                        rootCurvaNivel.getChildren().add(circleContent2(dialogCilindricas));
                         break;
                     case "ellip":
                         ellipseBtn.setSelected(true);
-                        rootCurvaNivel.getChildren().add(ellipseContent2(dialog));
+                        rootCurvaNivel.getChildren().add(ellipseContent2(dialogCilindricas));
                         break;
                 }
             }
@@ -1497,7 +1499,7 @@ public class Main extends Application {
                 switch (curvaInf2.getTipo()) {
                     case "otro":
                         otroBtn.setSelected(true);
-                        rootCurvaNivel.getChildren().add(otroContent2(dialog));
+                        rootCurvaNivel.getChildren().add(otroContent2(dialogCilindricas));
                         break;
                     case "circle":
                         //circuloBtn.setSelected(true);
@@ -1505,24 +1507,24 @@ public class Main extends Application {
                         break;
                     case "ellip":
                         ellipseBtn.setSelected(true);
-                        rootCurvaNivel.getChildren().add(ellipseContent2(dialog));
+                        rootCurvaNivel.getChildren().add(ellipseContent2(dialogCilindricas));
                         break;
                 }
             } else {
                 otroBtn.setSelected(true);
-                rootCurvaNivel.getChildren().add(otroContent2(dialog));
+                rootCurvaNivel.getChildren().add(otroContent2(dialogCilindricas));
             }
         } else {
             otroBtn.setSelected(true);
-            rootCurvaNivel.getChildren().add(otroContent2(dialog));
+            rootCurvaNivel.getChildren().add(otroContent2(dialogCilindricas));
         }
-        dialog.setScene(new Scene(rootCurvaNivel));
-        dialog.setHeight(450);
-        dialog.setWidth(500);
-        dialog.setTitle("Escribe datos");
-        dialog.setResizable(false);
-        dialog.initOwner(stageRef);
-        dialog.showAndWait();
+        dialogCilindricas.setScene(new Scene(rootCurvaNivel));
+        dialogCilindricas.setHeight(450);
+        dialogCilindricas.setWidth(500);
+        dialogCilindricas.setTitle("Escribe datos");
+        dialogCilindricas.setResizable(false);
+        dialogCilindricas.initOwner(stageRef);
+        dialogCilindricas.showAndWait();
     }
 
     private void otroCilindricasProccessInfo(TextField xMin, TextField xMax, Stage dialog, TextField equationField, TextField afinField, TextField ampField, String render) {
