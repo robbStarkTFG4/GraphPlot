@@ -215,7 +215,7 @@ public class SurfaceManager {
             List<Point3D> pointsList = new ArrayList<>();
             for (int i = 0; i < value.size(); i++) {
                 Punto2D punto2D = value.get(i);
-                Point3D p = new Point3D((float) punto2D.getX_Point(), 0, (float) punto2D.getY_Point());
+                Point3D p = new Point3D((float) (punto2D.getX_Point() ), 0, (float) (punto2D.getY_Point() / afinador));
                 pointsList.add(p);
             }
             PolyLine3D line = new PolyLine3D(pointsList, 1, c);
@@ -283,7 +283,7 @@ public class SurfaceManager {
                         line = new PolyLine3D(pointsList, 1, c);
                         break;
                     case "otro":
-                        line = new PolyLine3D(pointsList, 4, c);
+                        line = new PolyLine3D(pointsList, 2, c);
                         break;
                 }
 
