@@ -48,41 +48,29 @@ public class Cylinder implements Surface {
 
             for (int radiusIndex = -radiusDivisions; radiusIndex < radiusDivisions; radiusIndex++) {
 
-                /*x = acosu
-                y = bsinu
-                z = v
- 
-                u in[0,2pi) and v in(0, h);*/
+             
                 double v = radiusIndex * 0.0116 * radiusDivisions + 1.5683;
                 double u = 0.2617 * tubeIndex + 3.1403;
 
                 points[pointIndex + 0] = x = (float) (aProperty.getValue() * Math.cos(u));
                 points[pointIndex + 1] = y = (float) (bProperty.getValue() * Math.sin(u));
-                points[pointIndex + 2] = z = radiusIndex;//radiusIndex
+                points[pointIndex + 2] = z = radiusIndex;
 
-                /*System.out.println("x: " + points[pointIndex + 0]);
-                System.out.println("y: " + points[pointIndex + 1]);
-                System.out.println("z: " + points[pointIndex + 2]);*/
+             
                 pointIndex += 3;
 
             }
 
         }
 
-        //plot = new Group();
-        double amount = points.length / 3;
-        //System.out.println("cantidad puntos: " + amount);
+      
         for (int i = 0; i < points.length; i += 3) {
             Sphere sp = new Sphere(0.7);
             sp.setMaterial(new PhongMaterial(Color.BLACK));
             sp.setTranslateX(points[i + 0]);
             sp.setTranslateY(points[i + 1]);
             sp.setTranslateZ(points[i + 2]);
-            /*sp.setTranslateX(arrayX[x]);
-            sp.setTranslateY(arrayYN[x]);
-            sp.setTranslateZ(arrayZN[x]);*/
             plot.getChildren().add(sp);
-
         }
     }
 }

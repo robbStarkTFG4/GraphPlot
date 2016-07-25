@@ -169,8 +169,8 @@ public class SurfaceManager {
     private void setUpCylinder() {
         constantsMap.clear();
 
-        DoubleProperty aProperty = new SimpleDoubleProperty(null, "a", 10);
-        DoubleProperty bProperty = new SimpleDoubleProperty(null, "b", 45);
+        DoubleProperty aProperty = new SimpleDoubleProperty(null, "a", 8);
+        DoubleProperty bProperty = new SimpleDoubleProperty(null, "b", 8);
 
         constantsMap.put("a", aProperty);
         constantsMap.put("b", bProperty);

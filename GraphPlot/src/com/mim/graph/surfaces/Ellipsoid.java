@@ -32,7 +32,7 @@ public class Ellipsoid implements Surface {
 
     @Override
     public void build() {
-        int radiusDivisions = 135;/// ESTE ES
+        int radiusDivisions = 80;/// ESTE ES
         int tubeDivisions = 12;//12
         int numVerts = (int) (tubeDivisions * radiusDivisions);
         int faceCount = numVerts * 2;

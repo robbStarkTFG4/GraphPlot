@@ -33,7 +33,7 @@ public class OneSheet implements Surface {
     @Override
     public void build() {
 
-        int radiusDivisions = 200;/// ESTE ES
+        int radiusDivisions = 120;/// ESTE ES
         int tubeDivisions = 12;//12
 
         int numVerts = (int) (tubeDivisions * radiusDivisions);

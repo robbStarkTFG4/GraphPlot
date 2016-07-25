@@ -38,7 +38,7 @@ public class TwoSheet implements Surface {
     @Override
     public void build() {
         //setHeightData(15, Color.AQUA, false, false);
-        int radiusDivisions = 135;/// ESTE ES
+        int radiusDivisions = 80;/// ESTE ES
         int tubeDivisions = 12;//12
 
         int numVerts = (int) (tubeDivisions * radiusDivisions);
