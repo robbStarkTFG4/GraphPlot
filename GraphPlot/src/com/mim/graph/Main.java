@@ -173,12 +173,13 @@ public class Main extends Application {
     private TextField bRadiusTxtCuadri;
     private Stage dialogNivel;
     private Stage dialogCilindricas;
-    
-    private Button procesarCurvaNivelOtro;
-    private Button procesarCircleNivel;
-    private Button circleCilindricas;
-    private Button ellipseNivelBtn;
-    private Button ellipseCilindricasBtn;
+
+    private final Button procesarCurvaNivelOtro = new Button("PROCESAR");
+    private final Button procesarCircleNivel = new Button("PROCESAR");
+    private final Button circleCilindricas = new Button("PROCESAR");
+    private final Button ellipseNivelBtn = new Button("PROCESAR");
+    private final Button ellipseCilindricasBtn = new Button("PROCESAR");
+    private final Button procesarSuperficieCilindrica = new Button("PROCESAR");
 
     @Override
     public void start(Stage primaryStage) {
@@ -551,7 +552,7 @@ public class Main extends Application {
             bRadiusTxt.setText(String.valueOf(curvaInf.getbRadius()));
         }
 
-        ellipseNivelBtn = new Button("PROCESAR");
+        //ellipseNivelBtn = new Button("PROCESAR");
         ellipseNivelBtn.setPadding(new Insets(7));
         ellipseNivelBtn.setOnMouseClicked(a -> {
 
@@ -690,7 +691,7 @@ public class Main extends Application {
             ampField.setText(String.valueOf(curvaInf2.getAmplificador()));
         }
 
-        ellipseCilindricasBtn = new Button("PROCESAR");
+        //ellipseCilindricasBtn = new Button("PROCESAR");
         ellipseCilindricasBtn.setPadding(new Insets(7));
         ellipseCilindricasBtn.setOnMouseClicked(a -> {
             String renderType = null;
@@ -815,7 +816,7 @@ public class Main extends Application {
             cMax.setText(String.valueOf(curvaInf.getcMax()));
         }
 
-        procesarCircleNivel = new Button("PROCESAR");
+        //procesarCircleNivel = new Button("PROCESAR");
         procesarCircleNivel.setPadding(new Insets(7));
         procesarCircleNivel.setOnMouseClicked(a -> {
             String renderType = null;
@@ -938,7 +939,7 @@ public class Main extends Application {
             cMax.setText(String.valueOf(curvaInf.getcMax()));
         }
 
-        circleCilindricas = new Button("PROCESAR");
+        //circleCilindricas = new Button("PROCESAR");
         circleCilindricas.setPadding(new Insets(7));
         circleCilindricas.setOnMouseClicked(a -> {
             String renderType = null;
@@ -1009,7 +1010,7 @@ public class Main extends Application {
             curvaInf.setTipo("otro");
         }
 
-        procesarCurvaNivelOtro = new Button("PROCESAR");
+        //procesarCurvaNivelOtro = new Button("PROCESAR");
         procesarCurvaNivelOtro.setPadding(new Insets(7));
         procesarCurvaNivelOtro.setOnMouseClicked(a -> {
             String renderType = null;
@@ -1069,7 +1070,7 @@ public class Main extends Application {
             ampField.setText(String.valueOf(curvaInf2.getAmplificador()));
         }
 
-        Button procesarSuperficieCilindrica = new Button("PROCESAR");
+        //procesarSuperficieCilindrica = new Button("PROCESAR");
         procesarSuperficieCilindrica.setPadding(new Insets(7));
         procesarSuperficieCilindrica.setOnMouseClicked(a -> {
             String renderType = null;
